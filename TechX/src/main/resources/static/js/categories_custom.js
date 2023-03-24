@@ -7,11 +7,12 @@
 1. Vars and Inits
 2. Set Header
 3. Init Menu
-4. Init Timer
-5. Init Favorite
-6. Init Fix Product Border
-7. Init Isotope Filtering
-8. Init Slider
+4. Init Favorite
+5. Init Fix Product Border
+6. Init Isotope Filtering
+7. Init Price Slider
+8. Init Checkboxes
+
 
 
 ******************************/
@@ -49,11 +50,11 @@ jQuery(document).ready(function($)
 	});
 
 	initMenu();
-	initTimer();
 	initFavorite();
 	initFixProductBorder();
 	initIsotopeFiltering();
-	initSlider();
+	initPriceSlider();
+	initCheckboxes();
 
 	/* 
 
@@ -176,60 +177,7 @@ jQuery(document).ready(function($)
 
 	/* 
 
-	4. Init Timer
-
-	*/
-
-	function initTimer()
-    {
-    	if($('.timer').length)
-    	{
-    		// Uncomment line below and replace date
-	    	// var target_date = new Date("Dec 7, 2017").getTime();
-
-	    	// comment lines below
-	    	var date = new Date('2023-03-05');
-	    	date.setDate(date.getDate() + 3);
-	    	var target_date = date.getTime();
-	    	//----------------------------------------
-	 
-			// variables for time units
-			var days, hours, minutes, seconds;
-
-			var d = $('#day');
-			var h = $('#hour');
-			var m = $('#minute');
-			var s = $('#second');
-
-			setInterval(function ()
-			{
-			    // find the amount of "seconds" between now and target
-			    var current_date = new Date().getTime();
-			    var seconds_left = (target_date - current_date) / 1000;
-			 
-			    // do some time calculations
-			    days = parseInt(seconds_left / 86400);
-			    seconds_left = seconds_left % 86400;
-			     
-			    hours = parseInt(seconds_left / 3600);
-			    seconds_left = seconds_left % 3600;
-			     
-			    minutes = parseInt(seconds_left / 60);
-			    seconds = parseInt(seconds_left % 60);
-
-			    // display result
-			    d.text(days);
-			    h.text(hours);
-			    m.text(minutes);
-			    s.text(seconds); 
-			 
-			}, 1000);
-    	}	
-    }
-
-    /* 
-
-	5. Init Favorite
+	4. Init Favorite
 
 	*/
 
@@ -267,7 +215,7 @@ jQuery(document).ready(function($)
 
     /* 
 
-	6. Init Fix Product Border
+	5. Init Fix Product Border
 
 	*/
 
@@ -330,7 +278,7 @@ jQuery(document).ready(function($)
 					var product = $(products[products.length - 1]);
 					product.css('border-right', 'none');
 				}
-				for(var i = 3; i < products.length; i+=4)
+				for(var i = 2; i < products.length; i+=3)
 				{
 					var product = $(products[i]);
 					product.css('border-right', 'none');
@@ -345,7 +293,7 @@ jQuery(document).ready(function($)
 					var product = $(products[products.length - 1]);
 					product.css('border-right', 'none');
 				}
-				for(var i = 4; i < products.length; i+=5)
+				for(var i = 3; i < products.length; i+=4)
 				{
 					var product = $(products[i]);
 					product.css('border-right', 'none');
@@ -356,83 +304,149 @@ jQuery(document).ready(function($)
 
     /* 
 
-	7. Init Isotope Filtering
+	6. Init Isotope Filtering
 
 	*/
 
     function initIsotopeFiltering()
     {
-    	if($('.grid_sorting_button').length)
-    	{
-    		$('.grid_sorting_button').click(function()
-	    	{
-	    		// putting border fix inside of setTimeout because of the transition duration
-	    		setTimeout(function()
-		        {
-		        	initFixProductBorder();
-		        },500);
+    	var sortTypes = $('.type_sorting_btn');
+    	var sortNums = $('.num_sorting_btn');
+    	var sortTypesSelected = $('.sorting_type .item_sorting_btn is-checked span');
+    	var filterButton = $('.filter_button');
 
-		        $('.grid_sorting_button.active').removeClass('active');
-		        $(this).addClass('active');
-		 
-		        var selector = $(this).attr('data-filter');
-		        $('.product-grid').isotope({
-		            filter: selector,
+    	if($('.product-grid').length)
+    	{
+    		$('.product-grid').isotope({
+    			itemSelector: '.product-item',
+	            getSortData: {
+	            	price: function(itemElement)
+	            	{
+	            		var priceEle = $(itemElement).find('.product_price').text().replace( '$', '' );
+	            		return parseFloat(priceEle);
+	            	},
+	            	name: '.product_name'
+	            },
+	            animationOptions: {
+	                duration: 750,
+	                easing: 'linear',
+	                queue: false
+	            }
+	        });
+
+    		// Short based on the value from the sorting_type dropdown
+	        sortTypes.each(function()
+	        {
+	        	$(this).on('click', function()
+	        	{
+	        		$('.type_sorting_text').text($(this).text());
+	        		var option = $(this).attr('data-isotope-option');
+	        		option = JSON.parse( option );
+    				$('.product-grid').isotope( option );
+	        	});
+	        });
+
+	        // Show only a selected number of items
+	        sortNums.each(function()
+	        {
+	        	$(this).on('click', function()
+	        	{
+	        		var numSortingText = $(this).text();
+					var numFilter = ':nth-child(-n+' + numSortingText + ')';
+	        		$('.num_sorting_text').text($(this).text());
+    				$('.product-grid').isotope({filter: numFilter });
+	        	});
+	        });	
+
+	        // Filter based on the price range slider
+	        filterButton.on('click', function()
+	        {
+	        	$('.product-grid').isotope({
+		            filter: function()
+		            {
+		            	var priceRange = $('#amount').val();
+			        	var priceMin = parseFloat(priceRange.split('-')[0].replace('$', ''));
+			        	var priceMax = parseFloat(priceRange.split('-')[1].replace('$', ''));
+			        	var itemPrice = $(this).find('.product_price').clone().children().remove().end().text().replace( '$', '' );
+
+			        	return (itemPrice > priceMin) && (itemPrice < priceMax);
+		            },
 		            animationOptions: {
 		                duration: 750,
 		                easing: 'linear',
 		                queue: false
 		            }
 		        });
-
-		        
-		         return false;
-		    });
+	        });
     	}
     }
 
     /* 
 
-	8. Init Slider
+	7. Init Price Slider
 
 	*/
 
-    function initSlider()
+    function initPriceSlider()
     {
-    	if($('.product_slider').length)
-    	{
-    		var slider1 = $('.product_slider');
+		$( "#slider-range" ).slider(
+		{
+			range: true,
+			min: 0,
+			max: 1000,
+			values: [ 0, 580 ],
+			slide: function( event, ui )
+			{
+				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+			}
+		});
+			
+		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+    }
 
-    		slider1.owlCarousel({
-    			loop:false,
-    			dots:false,
-    			nav:false,
-    			responsive:
-				{
-					0:{items:1},
-					480:{items:2},
-					768:{items:3},
-					991:{items:4},
-					1280:{items:5},
-					1440:{items:5}
-				}
+    /* 
+
+	8. Init Checkboxes
+
+	*/
+
+    function initCheckboxes()
+    {
+    	if($('.checkboxes li').length)
+    	{
+    		var boxes = $('.checkboxes li');
+
+    		boxes.each(function()
+    		{
+    			var box = $(this);
+
+    			box.on('click', function()
+    			{
+    				if(box.hasClass('active'))
+    				{
+    					box.find('i').removeClass('fa-square');
+    					box.find('i').addClass('fa-square-o');
+    					box.toggleClass('active');
+    				}
+    				else
+    				{
+    					box.find('i').removeClass('fa-square-o');
+    					box.find('i').addClass('fa-square');
+    					box.toggleClass('active');
+    				}
+    				// box.toggleClass('active');
+    			});
     		});
 
-    		if($('.product_slider_nav_left').length)
+    		if($('.show_more').length)
     		{
-    			$('.product_slider_nav_left').on('click', function()
-    			{
-    				slider1.trigger('prev.owl.carousel');
-    			});
-    		}
+    			var checkboxes = $('.checkboxes');
 
-    		if($('.product_slider_nav_right').length)
-    		{
-    			$('.product_slider_nav_right').on('click', function()
+    			$('.show_more').on('click', function()
     			{
-    				slider1.trigger('next.owl.carousel');
+    				checkboxes.toggleClass('active');
     			});
     		}
-    	}
+    	};
     }
 });

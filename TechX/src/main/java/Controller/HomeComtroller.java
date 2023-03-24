@@ -9,5 +9,9 @@ public class HomeComtroller {
 	public String Index() {
 		return "index";
 	}
+	@GetMapping("/contact")
+	public String Contact() {
+		return "contact";
+	}
 
 }
