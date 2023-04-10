@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2023 at 04:07 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Generation Time: Apr 10, 2023 at 07:01 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,46 @@ SET time_zone = "+00:00";
 --
 -- Database: `phone-store`
 --
+CREATE DATABASE IF NOT EXISTS `phone-store` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `phone-store`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE IF NOT EXISTS `product` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `color` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `price` int(11) DEFAULT NULL,
+  `quatity` varchar(255) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE IF NOT EXISTS `role` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `name`) VALUES
+(1, 'ROLE_USER'),
+(2, 'ROLE_USER'),
+(3, 'ROLE_USER');
 
 -- --------------------------------------------------------
 
@@ -27,7 +67,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `tb_advertisement`
 --
 
-CREATE TABLE `tb_advertisement` (
+CREATE TABLE IF NOT EXISTS `tb_advertisement` (
   `id` int(11) NOT NULL,
   `Title` varchar(200) DEFAULT NULL,
   `Description` varchar(500) DEFAULT NULL,
@@ -40,8 +80,9 @@ CREATE TABLE `tb_advertisement` (
   `CreateDate` datetime DEFAULT NULL,
   `CreateBy` varchar(100) DEFAULT NULL,
   `ModifierDate` datetime DEFAULT NULL,
-  `ModifierBy` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ModifierBy` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_advertisement`
@@ -56,7 +97,7 @@ INSERT INTO `tb_advertisement` (`id`, `Title`, `Description`, `Image`, `Type`, `
 -- Table structure for table `tb_contact`
 --
 
-CREATE TABLE `tb_contact` (
+CREATE TABLE IF NOT EXISTS `tb_contact` (
   `id` int(11) NOT NULL,
   `Name` varchar(150) DEFAULT NULL,
   `Website` varchar(150) DEFAULT NULL,
@@ -69,8 +110,9 @@ CREATE TABLE `tb_contact` (
   `CreateDate` datetime DEFAULT NULL,
   `CreateBy` varchar(100) DEFAULT NULL,
   `ModifierDate` datetime DEFAULT NULL,
-  `ModifierBy` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ModifierBy` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -78,15 +120,16 @@ CREATE TABLE `tb_contact` (
 -- Table structure for table `tb_deal`
 --
 
-CREATE TABLE `tb_deal` (
+CREATE TABLE IF NOT EXISTS `tb_deal` (
   `id` int(11) NOT NULL,
   `tiltle` varchar(100) NOT NULL,
   `image` char(100) NOT NULL,
   `createBy` varchar(50) NOT NULL,
   `startTime` date NOT NULL,
   `Hide` tinyint(1) DEFAULT NULL,
-  `endTime` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `endTime` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_deal`
@@ -101,14 +144,15 @@ INSERT INTO `tb_deal` (`id`, `tiltle`, `image`, `createBy`, `startTime`, `Hide`,
 -- Table structure for table `tb_header`
 --
 
-CREATE TABLE `tb_header` (
+CREATE TABLE IF NOT EXISTS `tb_header` (
   `id` int(11) NOT NULL,
   `ads` varchar(1000) DEFAULT NULL,
   `DateCreate` date DEFAULT NULL,
   `Createby` varchar(100) DEFAULT NULL,
   `Link` varchar(100) DEFAULT NULL,
-  `EndDate` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `EndDate` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_header`
@@ -125,7 +169,7 @@ INSERT INTO `tb_header` (`id`, `ads`, `DateCreate`, `Createby`, `Link`, `EndDate
 -- Table structure for table `tb_menu`
 --
 
-CREATE TABLE `tb_menu` (
+CREATE TABLE IF NOT EXISTS `tb_menu` (
   `id` int(11) NOT NULL,
   `Title` varchar(200) DEFAULT NULL,
   `Description` varchar(500) DEFAULT NULL,
@@ -138,8 +182,9 @@ CREATE TABLE `tb_menu` (
   `CreateDate` datetime DEFAULT NULL,
   `CreateBy` varchar(100) DEFAULT NULL,
   `ModifierDate` datetime DEFAULT NULL,
-  `ModifierBy` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ModifierBy` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_menu`
@@ -157,7 +202,7 @@ INSERT INTO `tb_menu` (`id`, `Title`, `Description`, `SeoTitle`, `SeoDescription
 -- Table structure for table `tb_news`
 --
 
-CREATE TABLE `tb_news` (
+CREATE TABLE IF NOT EXISTS `tb_news` (
   `id` int(11) NOT NULL,
   `Title` varchar(250) DEFAULT NULL,
   `CategoryId` int(11) DEFAULT NULL,
@@ -173,8 +218,9 @@ CREATE TABLE `tb_news` (
   `CreateDate` datetime DEFAULT NULL,
   `CreateBy` varchar(100) DEFAULT NULL,
   `ModifierDate` datetime DEFAULT NULL,
-  `ModifierBy` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ModifierBy` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_news`
@@ -191,7 +237,7 @@ INSERT INTO `tb_news` (`id`, `Title`, `CategoryId`, `Description`, `Detail`, `Im
 -- Table structure for table `tb_order`
 --
 
-CREATE TABLE `tb_order` (
+CREATE TABLE IF NOT EXISTS `tb_order` (
   `id` int(11) NOT NULL,
   `Code` varchar(50) DEFAULT NULL,
   `CustomerName` varchar(200) DEFAULT NULL,
@@ -205,8 +251,9 @@ CREATE TABLE `tb_order` (
   `CreateDate` datetime DEFAULT NULL,
   `CreateBy` varchar(100) DEFAULT NULL,
   `ModifierDate` datetime DEFAULT NULL,
-  `ModifierBy` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ModifierBy` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -214,7 +261,7 @@ CREATE TABLE `tb_order` (
 -- Table structure for table `tb_orderdetail`
 --
 
-CREATE TABLE `tb_orderdetail` (
+CREATE TABLE IF NOT EXISTS `tb_orderdetail` (
   `id` int(11) NOT NULL,
   `OrderId` int(11) DEFAULT NULL,
   `ProductId` int(11) DEFAULT NULL,
@@ -226,8 +273,9 @@ CREATE TABLE `tb_orderdetail` (
   `CreateDate` datetime DEFAULT NULL,
   `CreateBy` varchar(100) DEFAULT NULL,
   `ModifierDate` datetime DEFAULT NULL,
-  `ModifierBy` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ModifierBy` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -235,7 +283,7 @@ CREATE TABLE `tb_orderdetail` (
 -- Table structure for table `tb_product`
 --
 
-CREATE TABLE `tb_product` (
+CREATE TABLE IF NOT EXISTS `tb_product` (
   `id` int(11) NOT NULL,
   `Title` varchar(250) DEFAULT NULL,
   `Description` varchar(4000) DEFAULT NULL,
@@ -254,8 +302,9 @@ CREATE TABLE `tb_product` (
   `CreateBy` varchar(100) DEFAULT NULL,
   `ModifierDate` datetime DEFAULT NULL,
   `ModifierBy` varchar(100) DEFAULT NULL,
-  `ProductCategory` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ProductCategory` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_product`
@@ -283,7 +332,7 @@ INSERT INTO `tb_product` (`id`, `Title`, `Description`, `Detail`, `Image`, `Pric
 -- Table structure for table `tb_productcategory`
 --
 
-CREATE TABLE `tb_productcategory` (
+CREATE TABLE IF NOT EXISTS `tb_productcategory` (
   `id` int(11) NOT NULL,
   `Title` varchar(200) DEFAULT NULL,
   `Description` varchar(500) DEFAULT NULL,
@@ -294,8 +343,9 @@ CREATE TABLE `tb_productcategory` (
   `CreateDate` datetime DEFAULT NULL,
   `CreateBy` varchar(100) DEFAULT NULL,
   `ModifierDate` datetime DEFAULT NULL,
-  `ModifierBy` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `ModifierBy` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_productcategory`
@@ -313,11 +363,12 @@ INSERT INTO `tb_productcategory` (`id`, `Title`, `Description`, `Icon`, `Meta`, 
 -- Table structure for table `tb_subcribe`
 --
 
-CREATE TABLE `tb_subcribe` (
+CREATE TABLE IF NOT EXISTS `tb_subcribe` (
   `id` int(11) NOT NULL,
   `Email` varchar(150) DEFAULT NULL,
-  `CreateDate` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `CreateDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -325,87 +376,58 @@ CREATE TABLE `tb_subcribe` (
 -- Table structure for table `tb_systemsetting`
 --
 
-CREATE TABLE `tb_systemsetting` (
+CREATE TABLE IF NOT EXISTS `tb_systemsetting` (
   `SettingKey` varchar(50) NOT NULL,
   `SettingValue` varchar(0) DEFAULT NULL,
-  `SettingDescription` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `SettingDescription` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`SettingKey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Table structure for table `users`
 --
 
---
--- Indexes for table `tb_advertisement`
---
-ALTER TABLE `tb_advertisement`
-  ADD PRIMARY KEY (`id`);
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) NOT NULL,
+  `first_name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`),
+  UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for table `tb_contact`
+-- Dumping data for table `users`
 --
-ALTER TABLE `tb_contact`
-  ADD PRIMARY KEY (`id`);
+
+INSERT INTO `users` (`id`, `email`, `first_name`, `last_name`, `password`) VALUES
+(3, 'admin2@gmail.com', 'Hao', 'Lieu', '$2a$10$TR2wnBUg2eOn9IWBgvynCOd3g3qoDJeuaiwhbXtW/DxTyE5e6izsa');
+
+-- --------------------------------------------------------
 
 --
--- Indexes for table `tb_deal`
+-- Table structure for table `users_roles`
 --
-ALTER TABLE `tb_deal`
-  ADD PRIMARY KEY (`id`);
+
+CREATE TABLE IF NOT EXISTS `users_roles` (
+  `user_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL,
+  KEY `FKt4v0rrweyk393bdgt107vdx0x` (`role_id`),
+  KEY `FK2o0jvgh89lemvvo17cbqvdxaa` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for table `tb_header`
+-- Dumping data for table `users_roles`
 --
-ALTER TABLE `tb_header`
-  ADD PRIMARY KEY (`id`);
 
---
--- Indexes for table `tb_menu`
---
-ALTER TABLE `tb_menu`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_news`
---
-ALTER TABLE `tb_news`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_order`
---
-ALTER TABLE `tb_order`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_orderdetail`
---
-ALTER TABLE `tb_orderdetail`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_product`
---
-ALTER TABLE `tb_product`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_productcategory`
---
-ALTER TABLE `tb_productcategory`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_subcribe`
---
-ALTER TABLE `tb_subcribe`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_systemsetting`
---
-ALTER TABLE `tb_systemsetting`
-  ADD PRIMARY KEY (`SettingKey`);
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
