@@ -2,6 +2,7 @@ package tdtu.edu.vn.service;
 
 import java.util.List;
 
+import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.Product;
 
 public interface ProductService {
@@ -14,5 +15,6 @@ public interface ProductService {
 	public Product updateProduct(Product product);
 
 	public void deleteProductById(Long id);
+	
 
 }

@@ -5,26 +5,32 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 
+import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.Product;
+import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.ProductService;
 
 @Controller
 public class HomeController {
 	public ProductService productService;
+	public CategoryService categoryService;
 
 //	
-	public HomeController(ProductService productService) {
+	public HomeController(ProductService productService, CategoryService categoryService) {
 		super();
 		this.productService = productService;
+		this.categoryService=categoryService;
 //		
 	}
 
@@ -38,14 +44,16 @@ public class HomeController {
 		model.addAttribute("products", productService.getAllProducts());
 		return "admin";
 	}
+		
+	@ModelAttribute("category")
+	public List<Category> categgory(){
+		return categoryService.getAllCategorys();
+	}
 
 	@GetMapping("/admin/new")
 	public String createWatchForm(Model model) {
 		Product product = new Product();
 		model.addAttribute("product", product);
-//		List<Categories> categories = categoriesService.getAllCategories();
-//		model.addAttribute("categories", categories);
-
 		return "create_product";
 
 	}
@@ -54,16 +62,17 @@ public class HomeController {
 	public String saveWatch(@RequestParam("name") String name, @RequestParam("price") int price,
 			@RequestParam("color") String color, @RequestParam("quatity") String quatity,
 			@RequestParam("year") int year,
-
+			@RequestParam("category") long category_id,
 			@RequestParam("image") MultipartFile photo) {
 		Product product_new = new Product();
-		// Categories categories=categoriesService.getbByid(categori_id);
+		Category category=categoryService.getCategoryById(category_id);
+		
 		product_new.setName(name);
 		product_new.setPrice(price);
 		product_new.setColor(color);
 		product_new.setQuatity(quatity);
 		product_new.setYear(year);
-
+		product_new.setCategory(category);
 		// watch_new.setCategory_id(categories);
 		if (photo.isEmpty()) {
 			return "/admin";
@@ -85,6 +94,8 @@ public class HomeController {
 	@GetMapping("/admin/edit/{id}")
 	public String editProductForm(@PathVariable Long id, Model model) {
 		model.addAttribute("product", productService.getProductById(id));
+		List<Category> category =categoryService.getAllCategorys();
+		model.addAttribute("category", category);
 		return "edit_product";
 	}
 
@@ -92,16 +103,19 @@ public class HomeController {
 	public String updateProducts(@PathVariable Long id, @RequestParam("name") String name,
 			@RequestParam("price") int price, @RequestParam("color") String color,
 			@RequestParam("quatity") String quatity, @RequestParam("year") int year,
+			@RequestParam(value="category.id",required=false) long category_id,
 			@RequestParam("image") MultipartFile photo) {
 
 		// get watch from database by id
 		Product existingProduct= productService.getProductById(id);
+		Category category=categoryService.getCategoryById(category_id);
 		existingProduct.setId(id);
 		existingProduct.setName(name);
 		existingProduct.setPrice(price);
 		existingProduct.setColor(color);
 		existingProduct.setQuatity(quatity);
 		existingProduct.setYear(year);
+		existingProduct.setCategory(category);
 		
 		if (photo.isEmpty()) {
 			return "/admin";

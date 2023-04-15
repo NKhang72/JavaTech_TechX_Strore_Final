@@ -1,5 +1,7 @@
 package tdtu.edu.vn.entity;
 
+import java.util.List;
+
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import jakarta.persistence.Column;
@@ -34,6 +36,13 @@ public class Product {
 	private String color;
 	@Column(name = "year")
 	private int year;
+	@Column(name = "size")
+	private int size;
+	@OneToMany(mappedBy = "product")
+	List<OrderDetail> orderDetails;
+	@ManyToOne
+	@JoinColumn(name="Categoryid")
+	Category category;
 	public Product() {
 		super();
 	}
@@ -87,6 +96,18 @@ public class Product {
 	}
 	public void setYear(int year) {
 		this.year = year;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 
