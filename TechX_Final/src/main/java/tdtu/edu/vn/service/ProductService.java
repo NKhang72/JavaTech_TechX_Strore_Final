@@ -16,5 +16,6 @@ public interface ProductService {
 
 	public void deleteProductById(Long id);
 	
+	public List<Product> getProductByMeta(String meta);
 
 }

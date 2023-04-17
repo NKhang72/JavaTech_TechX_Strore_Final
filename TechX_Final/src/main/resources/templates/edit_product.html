@@ -77,6 +77,80 @@
 								placeholder="Enter 's Version" />
 						</div>
 						<div class="form-group">
+							<label> Description </label> <textarea  type="text" name="description" rows="5"
+								th:field="*{description}" class="form-control"
+								placeholder="Enter Product's Description" /></textarea>
+						</div>
+						<div class="form-group">
+							<label> Screen Type </label> <input type="text" name="screen_type"
+								th:field="*{screen_type}" class="form-control"
+								placeholder="Enter Product's Sreen Type" />
+						</div>
+						<div class="form-group">
+							<label> Resolution </label> <input type="text" name="screen"
+								th:field="*{screen}" class="form-control"
+								placeholder="Enter Product's Screen Resolution" />
+						</div>
+						<div class="form-group">
+							<label> CPU </label> <input type="text" name="cpu"
+								th:field="*{cpu}" class="form-control"
+								placeholder="Enter Product's CPU" />
+						</div>
+						<div class="form-group">OS:
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="iOS" name="iOS"
+									class="custom-control-input" value="iOS" th:field="*{os}">
+								<label class="custom-control-label" for="iOS">iOS</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="android" name="android"
+									class="custom-control-input" value="android" th:field="*{os}">
+								<label class="custom-control-label" for="android">Android</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="masOS" name="masOS"
+									class="custom-control-input" value="masOS" th:field="*{os}">
+								<label class="custom-control-label" for="masOS">masOS</label>
+								
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="Windown" name="Windown"
+									class="custom-control-input" value="Windown" th:field="*{os}">
+								<label class="custom-control-label" for="Windown">Windown</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="watchOS" name="watchOS"
+									class="custom-control-input" value="watchOS" th:field="*{os}">
+								<label class="custom-control-label" for="watchOS">watchOS</label>
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<label> Ram </label> <input type="text" name="ram"
+								th:field="*{ram}" class="form-control"
+								placeholder="Enter Product's Ram" />
+						</div>
+						<div class="form-group">
+							<label> Rom </label> <input type="text" name="rom"
+								th:field="*{rom}" class="form-control"
+								placeholder="Enter Product's Rom" />
+						</div>
+						<div class="form-group">
+							<label> Front Camera </label> <input type="text" name="frontCamera"
+								th:field="*{frontCamera}" class="form-control"
+								placeholder="Enter Product's Front Camera" />
+						</div>
+						<div class="form-group">
+							<label> Back Camere </label> <input type="text" name="backCamera"
+								th:field="*{backCamera}" class="form-control"
+								placeholder="Enter Product's Back Camera" />
+						</div>
+						<div class="form-group">
+							<label> Battery </label> <input type="text" name="battery"
+								th:field="*{battery}" class="form-control"
+								placeholder="Enter Product's Battery" />
+						</div>
+						<div class="form-group">
 							<label> Category </label>
 							 <select th:name="category" th:field="*{category.id}" class="form-select form-control">
 <!-- 							 <option th:text = "${product.category.getName()}" th:value= "${product.category.getId()}"></option> -->
@@ -85,9 +159,12 @@
 									</select>
 						</div>
 						<div class="form-group">
-							<label> Image </label> <input th:field="*{image}" type="file"
+							<label> Image </label> <input  th:src="@{'getimage/'+ ${product.image}}" th:field="*{image}" type="file"
 								name="image" accept="image/png, image/jpeg" class="form-control" />
-								<img th:src="@{'getimage/'+ ${product.image}}" alt="" style="max-height:100%; max-width:100%">
+							<label> Image 1</label> <input th:field="*{image1}" type="file"
+								name="image1" accept="image/png, image/jpeg" class="form-control" />
+							<label> Image 2 </label> <input th:field="*{image2}" type="file"
+								name="image2" accept="image/png, image/jpeg" class="form-control" />
 						</div>
 
 						<div class="box-footer">

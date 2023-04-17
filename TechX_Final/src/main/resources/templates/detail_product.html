@@ -11,8 +11,7 @@
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		<!-- Brand -->
-		<a class="navbar-brand" th:href="@{/admin}">Tech X Store
-			Management System</a>
+		<a class="navbar-brand" th:href="@{/admin}">Tech X Store Management System</a>
 
 		<!-- Toggler/collapsibe Button -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -34,97 +33,93 @@
 		<div class="row">
 			<div
 				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class="text-center">Create New product</h1>
+				<h1 class="text-center">Detail Product</h1>
 				<div class="card-body">
-					<form th:action="@{/admin}" th:object="${product}"
-						enctype="multipart/form-data" method="POST">
+					<form th:action="@{/admin/{id} (id=${product.id})}"
+						th:object="${product}" enctype="multipart/form-data" method="POST">
 						<div class="form-group">
-							<label> Product Name </label> <input type="text" name="name"
+							<label>  Name </label> <input type="text" name="name"
 								th:field="*{name}" class="form-control"
-								placeholder="Enter Product's Name" />
+								placeholder="Enter 's Name" disabled/>
 						</div>
 						<div class="form-group">
-							<label> Price </label> <input type="number" name="price"
+							<label> Price </label> <input type="text" name="price"
 								th:field="*{price}" class="form-control"
-								placeholder="Enter Product's Price" />
+								placeholder="Enter 's Price" disabled/>
 						</div>
-						<!-- 						<div class="form-group"> -->
-						<!-- 							<label> Color </label> <input type="text" name="color" -->
-						<!-- 								th:field="*{color}" class="form-control" -->
-						<!-- 								placeholder="Enter Product's Color" /> -->
-						<!-- 						</div> -->
+						
 						<div class="form-group">
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="white" name="white"
+								<input type="radio" id="white" name="white" disabled
 									class="custom-control-input" value="White" th:field="*{color}">
-								<label class="custom-control-label" for="white">White</label>
+								<label class="custom-control-label" for="white">Black</label>
 							</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="gold" name="gold"
+								<input type="radio" id="gold" name="gold" disabled
 									class="custom-control-input" value="Gold" th:field="*{color}">
 								<label class="custom-control-label" for="gold">Gold</label>
 							</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="black" name="black"
+								<input type="radio" id="black" name="black" disabled
 									class="custom-control-input" value="Black" th:field="*{color}">
 								<label class="custom-control-label" for="black">Black</label>
 							</div>
 						</div>
-
+						
 						<div class="form-group">
-							<label> Quatity </label> <input type="number" name="quatity"
+							<label> Quatity </label> <input type="text" name="quatity"
 								th:field="*{quatity}" class="form-control"
-								placeholder="Enter Product's Quatity" />
+								placeholder="Enter 's Quatity" disabled/>
 						</div>
 						<div class="form-group">
 							<label> Year Version </label> <input type="text" name="year"
 								th:field="*{year}" class="form-control"
-								placeholder="Enter Product's Version" />
+								placeholder="Enter 's Version" disabled/>
 						</div>
 						<div class="form-group">
 							<label> Description </label> <textarea  type="text" name="description" rows="5"
 								th:field="*{description}" class="form-control"
-								placeholder="Enter Product's Description" /></textarea>
+								placeholder="Enter Product's Description" disabled/></textarea>
 						</div>
 						<div class="form-group">
 							<label> Screen Type </label> <input type="text" name="screen_type"
 								th:field="*{screen_type}" class="form-control"
-								placeholder="Enter Product's Sreen Type" />
+								placeholder="Enter Product's Sreen Type" disabled/>
 						</div>
 						<div class="form-group">
 							<label> Resolution </label> <input type="text" name="screen"
 								th:field="*{screen}" class="form-control"
-								placeholder="Enter Product's Screen Resolution" />
+								placeholder="Enter Product's Screen Resolution" disabled/>
 						</div>
 						<div class="form-group">
 							<label> CPU </label> <input type="text" name="cpu"
 								th:field="*{cpu}" class="form-control"
-								placeholder="Enter Product's CPU" />
+								placeholder="Enter Product's CPU" disabled/>
 						</div>
 						<div class="form-group">OS:
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="iOS" name="iOS"
+								<input type="radio" id="iOS" name="iOS" disabled
 									class="custom-control-input" value="iOS" th:field="*{os}">
 								<label class="custom-control-label" for="iOS">iOS</label>
 							</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="android" name="android"
+								<input type="radio" id="android" name="android" disabled
 									class="custom-control-input" value="android" th:field="*{os}">
 								<label class="custom-control-label" for="android">Android</label>
 							</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="masOS" name="masOS"
+								<input type="radio" id="masOS" name="masOS" disabled
 									class="custom-control-input" value="masOS" th:field="*{os}">
 								<label class="custom-control-label" for="masOS">masOS</label>
 								
 							</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="Windown" name="Windown"
+								<input type="radio" id="Windown" name="Windown" disabled
 									class="custom-control-input" value="Windown" th:field="*{os}">
 								<label class="custom-control-label" for="Windown">Windown</label>
 							</div>
 							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="watchOS" name="watchOS"
+								<input type="radio" id="watchOS" name="watchOS" disabled
 									class="custom-control-input" value="watchOS" th:field="*{os}">
 								<label class="custom-control-label" for="watchOS">watchOS</label>
 								
@@ -133,51 +128,54 @@
 						<div class="form-group">
 							<label> Ram </label> <input type="text" name="ram"
 								th:field="*{ram}" class="form-control"
-								placeholder="Enter Product's Ram" />
+								placeholder="Enter Product's Ram" disabled/>
 						</div>
 						<div class="form-group">
 							<label> Rom </label> <input type="text" name="rom"
 								th:field="*{rom}" class="form-control"
-								placeholder="Enter Product's Rom" />
+								placeholder="Enter Product's Rom" disabled/>
 						</div>
 						<div class="form-group">
 							<label> Front Camera </label> <input type="text" name="frontCamera"
 								th:field="*{frontCamera}" class="form-control"
-								placeholder="Enter Product's Front Camera" />
+								placeholder="Enter Product's Front Camera" disabled/>
 						</div>
 						<div class="form-group">
 							<label> Back Camere </label> <input type="text" name="backCamera"
 								th:field="*{backCamera}" class="form-control"
-								placeholder="Enter Product's Back Camera" />
+								placeholder="Enter Product's Back Camera" disabled/>
 						</div>
 						<div class="form-group">
 							<label> Battery </label> <input type="text" name="battery"
 								th:field="*{battery}" class="form-control"
-								placeholder="Enter Product's Battery" />
+								placeholder="Enter Product's Battery" disabled/>
 						</div>
 						<div class="form-group">
-							<label> Category </label> <select name="category" id="category"
-								class="form-select form-control">
+							<label> Category </label>
+							 <select th:name="category" th:field="*{category.id}" class="form-select form-control" disabled>
+<!-- 							 <option th:text = "${product.category.getName()}" th:value= "${product.category.getId()}"></option> -->
 								<option th:each="category : ${category}"
-									th:value="${category.id}" th:text="${category.name}" />
-							</select>
+									th:value="${category.id}" th:text="${category.name}"/>
+									</select>
 						</div>
 						<div class="form-group">
-							<label> Image </label> <input th:field="*{image}" type="file"
-								name="image" accept="image/png, image/jpeg" class="form-control" />
-							<label> Image 1</label> <input th:field="*{image1}" type="file"
+							<label> Image </label> <input disabled th:field="*{image}" type="file"
+								name="image" accept="image/png, image/jpeg" class="form-control" th:src="@{'getimage/'+ ${product.image}}"/>
+							<label> Image 1</label> <input disabled th:field="*{image1}" type="file"
 								name="image1" accept="image/png, image/jpeg" class="form-control" />
-							<label> Image 2 </label> <input th:field="*{image2}" type="file"
+							<label> Image 2 </label> <input disabled th:field="*{image2}" type="file"
 								name="image2" accept="image/png, image/jpeg" class="form-control" />
 						</div>
+
 						<div class="box-footer">
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button  class="btn btn-primary" th:href="@{/admin/}">Back </button>
 						</div>
 					</form>
-					<span th:if="${msg != null}" th:text="${msg}"></span>
+
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+
 </html>

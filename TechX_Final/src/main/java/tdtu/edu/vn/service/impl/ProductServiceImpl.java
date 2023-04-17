@@ -1,5 +1,6 @@
 package tdtu.edu.vn.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -38,6 +39,17 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteProductById(Long id) 
 	{
 		 productRepository.deleteById(id);
+	}
+	@Override
+	public  List<Product> getProductByMeta(String meta){
+		List<Product> allProduct =  productRepository.findAll();
+		List<Product> result=new ArrayList<Product>();
+		for( Product product: allProduct) {
+			if( product.getCategory().getName().equals(meta)) {
+				result.add(product);
+			}
+		}
+		return result;
 	}
 
 }

@@ -53,9 +53,9 @@
 				<tr>
 					<th> Name</th>
 					<th> Price</th>
-					<th> Quanity </th>
+					<th> Quantity </th>
 					<th> Color </th>
-					
+					<th> Description </th>
 					<th> Category </th> 
 					<th> Image </th>
 					<th> Actions </th>
@@ -68,10 +68,13 @@
 					<td th:text = "${product.price}"></td>
 					<td th:text = "${product.quatity}"></td>
 					<td th:text = "${product.color}"></td>
+					<td th:text = "${product.description}"></td>
 					<td th:text = "${product.category.getName()}"></td> 
 					<td style="width:200px; height:200px; text-align:center; vertical-align:middle" >
 					
 					<img th:src="@{'getimage/'+ ${product.image}}" alt="" style="max-height:100%; max-width:100%">
+					<img th:src="@{'getimage/'+ ${product.image1}}" alt="" style="max-height:100%; max-width:100%">
+					<img th:src="@{'getimage/'+ ${product.image2}}" alt="" style="max-height:100%; max-width:100%">
 					</td>
 					<td>
 						 <a th:href = "@{/admin/edit/{id}(id=${product.id})}"
@@ -79,6 +82,8 @@
 						
 						<a th:href = "@{/admin/{id}(id=${product.id})}" 
  						 class = "btn btn-danger">Delete</a>  
+ 						 <a th:href = "@{/admin/detail/{id}(id=${product.id})}" 
+ 						 class = "btn btn-danger">Detail</a> 
 						 
 					</td>
 				</tr>
