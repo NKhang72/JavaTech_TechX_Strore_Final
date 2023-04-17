@@ -56,7 +56,7 @@
 					<div class="product_details">
 						<div class="product_details_title">
 							<h2 th:text=${product.name}>Pocket cotton sweatshirt</h2>
-							<p th:text=${product.description}>Nam tempus turpis at metus
+							<p th:utext=${product.description}>Nam tempus turpis at metus
 								scelerisque placerat nulla deumantos solicitud felis.
 								Pellentesque diam dolor, elementum etos lobortis des mollis
 								ut...</p>
@@ -399,6 +399,8 @@
 		</div>
 
 		<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+		
+		<script type="text/javascript" th:src="@{/richtext/jquery.richtext.min.js}"></script>
 		<script type="text/javascript"
 			th:src="@{/styles/bootstrap4/popper.js}"></script>
 		<script type="text/javascript"

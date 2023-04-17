@@ -7,6 +7,16 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
+
+<script type="text/javascript"
+	th:src="@{/tinymce/js/tinymce/tinymce.min.js}"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: '#description'
+});
+</script>
+
+
 </head>
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -82,14 +92,15 @@
 								placeholder="Enter Product's Version" />
 						</div>
 						<div class="form-group">
-							<label> Description </label> <textarea  type="text" name="description" rows="5"
-								th:field="*{description}" class="form-control"
+							<label> Description </label>
+							<textarea type="text" name="description" rows="5"
+								th:field="*{description}" class="form-control content"
 								placeholder="Enter Product's Description" /></textarea>
 						</div>
 						<div class="form-group">
-							<label> Screen Type </label> <input type="text" name="screen_type"
-								th:field="*{screen_type}" class="form-control"
-								placeholder="Enter Product's Sreen Type" />
+							<label> Screen Type </label> <input type="text"
+								name="screen_type" th:field="*{screen_type}"
+								class="form-control" placeholder="Enter Product's Sreen Type" />
 						</div>
 						<div class="form-group">
 							<label> Resolution </label> <input type="text" name="screen"
@@ -101,7 +112,8 @@
 								th:field="*{cpu}" class="form-control"
 								placeholder="Enter Product's CPU" />
 						</div>
-						<div class="form-group">OS:
+						<div class="form-group">
+							OS:
 							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" id="iOS" name="iOS"
 									class="custom-control-input" value="iOS" th:field="*{os}">
@@ -116,7 +128,7 @@
 								<input type="radio" id="masOS" name="masOS"
 									class="custom-control-input" value="masOS" th:field="*{os}">
 								<label class="custom-control-label" for="masOS">masOS</label>
-								
+
 							</div>
 							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" id="Windown" name="Windown"
@@ -127,7 +139,7 @@
 								<input type="radio" id="watchOS" name="watchOS"
 									class="custom-control-input" value="watchOS" th:field="*{os}">
 								<label class="custom-control-label" for="watchOS">watchOS</label>
-								
+
 							</div>
 						</div>
 						<div class="form-group">
@@ -141,9 +153,9 @@
 								placeholder="Enter Product's Rom" />
 						</div>
 						<div class="form-group">
-							<label> Front Camera </label> <input type="text" name="frontCamera"
-								th:field="*{frontCamera}" class="form-control"
-								placeholder="Enter Product's Front Camera" />
+							<label> Front Camera </label> <input type="text"
+								name="frontCamera" th:field="*{frontCamera}"
+								class="form-control" placeholder="Enter Product's Front Camera" />
 						</div>
 						<div class="form-group">
 							<label> Back Camere </label> <input type="text" name="backCamera"
@@ -166,9 +178,10 @@
 							<label> Image </label> <input th:field="*{image}" type="file"
 								name="image" accept="image/png, image/jpeg" class="form-control" />
 							<label> Image 1</label> <input th:field="*{image1}" type="file"
-								name="image1" accept="image/png, image/jpeg" class="form-control" />
-							<label> Image 2 </label> <input th:field="*{image2}" type="file"
-								name="image2" accept="image/png, image/jpeg" class="form-control" />
+								name="image1" accept="image/png, image/jpeg"
+								class="form-control" /> <label> Image 2 </label> <input
+								th:field="*{image2}" type="file" name="image2"
+								accept="image/png, image/jpeg" class="form-control" />
 						</div>
 						<div class="box-footer">
 							<button type="submit" class="btn btn-primary">Submit</button>
@@ -179,5 +192,7 @@
 			</div>
 		</div>
 	</div>
+	
+
 </body>
 </html>
