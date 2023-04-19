@@ -21,21 +21,10 @@ public class UserLoginController {
 	public String showLoginForm() {
 		return "login";
 	}
-	
-	@PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, HttpSession session) {
-        User user = userRepository.findByEmail(email);
-        if (user != null && user.getPassword().equals(password)) {
-            session.setAttribute("user", user);
-            return "redirect:/";
-        } else {
-            return "login";
-        }
-    }
     
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.removeAttribute("user");
-        return "redirect:/";
+        session.removeAttribute("firstName");
+        return "redirect:/login";
     }
 }

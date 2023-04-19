@@ -9,8 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import jakarta.servlet.http.HttpSession;
 import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.Menu;
+import tdtu.edu.vn.entity.User;
+import tdtu.edu.vn.repository.UserRepository;
 import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.MenuService;
 import tdtu.edu.vn.service.ProductService;
@@ -20,18 +23,24 @@ public class IndexController {
 	public ProductService productService;
 	public CategoryService categoryService;
 	public MenuService menuService;
+	public UserRepository userRepository;
 
 //	
-	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService) {
+	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService, UserRepository userRepository) {
 		super();
 		this.productService = productService;
 		this.categoryService=categoryService;
 		this.menuService=menuService;
-//		
+		this.userRepository=userRepository;
 	}
 	@GetMapping({"/index", "/"})
-	public String index(Model model) {
+	public String index(Model model, HttpSession session) {
 		model.addAttribute("products", productService.getAllProducts());
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		 User user = userRepository.findByEmail(email);
+		 if (user != null) {
+			 model.addAttribute("firstName", user.getFirstName());
+		 }
 		return "index";
 	}
 	@ModelAttribute("category")

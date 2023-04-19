@@ -72,13 +72,13 @@
 										<i class="fa fa-angle-down"></i>
 									</a>
 									<ul class="account_selection">
-									<div th:if="${session.user != null}">
-										 <p>Hello, <span th:text="${session.user.firstName}"></span>!</p>
+									<div th:if="${firstName != null}">
+										 <p>Hello, <span th:text="${firstName}"></span>!</p>
+										 <li><a th:href="@{/logout}"><i class="fa fa-user-plus" aria-hidden="true"></i>Logout</a></li>
 									</div>
-									<div th:unless="${session.user != null}">
+									<div th:unless="${firstName != null}">
 										<li><a th:href="@{/login}"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
 										<li><a th:href="@{/register}"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
-										<li><a th:href="@{/logout}"><i class="fa fa-user-plus" aria-hidden="true"></i>Logout</a></li>
 									</div>
 									</ul>
 								</li>
