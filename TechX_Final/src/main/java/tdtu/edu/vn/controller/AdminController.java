@@ -17,20 +17,27 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 
 import tdtu.edu.vn.entity.Category;
+import tdtu.edu.vn.entity.News;
 import tdtu.edu.vn.entity.Product;
 import tdtu.edu.vn.service.CategoryService;
+import tdtu.edu.vn.service.MenuService;
+import tdtu.edu.vn.service.NewsService;
 import tdtu.edu.vn.service.ProductService;
 
 @Controller
 public class AdminController {
 	public ProductService productService;
 	public CategoryService categoryService;
+	public MenuService menuService;
+	public NewsService newsService;
 
 //	
-	public AdminController(ProductService productService, CategoryService categoryService) {
+	public AdminController(ProductService productService, CategoryService categoryService, MenuService menuService,NewsService newsService) {
 		super();
 		this.productService = productService;
 		this.categoryService=categoryService;
+		this.menuService=menuService;
+		this.newsService=newsService;
 //		
 	}
 
@@ -182,6 +189,18 @@ public class AdminController {
 	public String deleteProduct(@PathVariable Long id) {
 		productService.deleteProductById(id);
 		return "redirect:/admin";
+	}
+	@GetMapping("/admin/news")
+	public String showNews(Model model) {
+		model.addAttribute("newss", newsService.getAllNewss());
+		return "list_news";
+	}
+	@GetMapping("/admin/news/new")
+	public String createNewsForm(Model model) {
+		News news= new News();
+		model.addAttribute("news", news);
+		return "create_news";
+
 	}
 
 }
