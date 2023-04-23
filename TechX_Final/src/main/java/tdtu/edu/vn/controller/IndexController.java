@@ -14,10 +14,8 @@ import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.Menu;
 import tdtu.edu.vn.entity.User;
 import tdtu.edu.vn.repository.UserRepository;
-import tdtu.edu.vn.entity.News;
 import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.MenuService;
-import tdtu.edu.vn.service.NewsService;
 import tdtu.edu.vn.service.ProductService;
 
 @Controller
@@ -30,6 +28,8 @@ public class IndexController {
 	
 	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService,UserRepository userRepository) {
 
+//	
+	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService, UserRepository userRepository) {
 		super();
 		this.productService = productService;
 		this.categoryService=categoryService;
