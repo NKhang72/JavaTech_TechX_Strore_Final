@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,10 +21,14 @@ import org.springframework.ui.Model;
 import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.News;
 import tdtu.edu.vn.entity.Product;
+import tdtu.edu.vn.entity.User;
+import tdtu.edu.vn.repository.UserRepository;
 import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.MenuService;
 import tdtu.edu.vn.service.NewsService;
 import tdtu.edu.vn.service.ProductService;
+import tdtu.edu.vn.service.UserService;
+import tdtu.edu.vn.web.dto.UserRegistrationDto;
 
 @Controller
 public class AdminController {
@@ -30,14 +36,27 @@ public class AdminController {
 	public CategoryService categoryService;
 	public MenuService menuService;
 	public NewsService newsService;
+	public UserService userService;
+	public UserRepository userRepository;
+	
+	@ModelAttribute("user")
+	public UserRegistrationDto userRegistrationDto() {
+		return new UserRegistrationDto();
+	}
+	
+	@Autowired
+	public BCryptPasswordEncoder passwordEncoder;
 
 //	
-	public AdminController(ProductService productService, CategoryService categoryService, MenuService menuService,NewsService newsService) {
+	public AdminController(ProductService productService, CategoryService categoryService,
+			MenuService menuService ,NewsService newsService, UserService userService, UserRepository userRepository ) {
 		super();
 		this.productService = productService;
 		this.categoryService=categoryService;
 		this.menuService=menuService;
 		this.newsService=newsService;
+		this.userService=userService;
+		this.userRepository=userRepository;
 //		
 	}
 
@@ -202,5 +221,36 @@ public class AdminController {
 		return "create_news";
 
 	}
-
+	@GetMapping("/admin/users")
+	public String showUsers(Model model) {
+		List<User> listUsers = userService.getAllUsers();
+		model.addAttribute("users", listUsers);
+		return "list_users";
+	}
+	@GetMapping("/admin/users/edit/{id}")
+	public String editUserForm(@PathVariable Long id, Model model) {
+		User user = userService.getUserById(id);
+		
+		model.addAttribute("user", user);
+		
+		return "edit_users";
+	}
+	
+	@PostMapping("/admin/users/update/{id}")
+	public String editUserAccount(@PathVariable Long id, @ModelAttribute("user") UserRegistrationDto registrationDto) {
+		User currentUser = userService.getUserById(id);
+		currentUser.setId(id);
+		currentUser.setEmail(registrationDto.getEmail());
+		currentUser.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+		currentUser.setFirstName(registrationDto.getFirstName());
+		currentUser.setLastName(registrationDto.getLastName());
+		userRepository.save(currentUser);
+		return "redirect:/admin";
+	}
+	
+	@GetMapping("/admin/users/delete/{id}")
+	public String deleteUser(@PathVariable Long id) {
+		userService.deleteUser(id);
+		return "redirect:/admin";
+	}
 }

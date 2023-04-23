@@ -12,15 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import jakarta.servlet.http.HttpSession;
 import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.Menu;
-<<<<<<< Updated upstream
 import tdtu.edu.vn.entity.User;
 import tdtu.edu.vn.repository.UserRepository;
-=======
-import tdtu.edu.vn.entity.News;
->>>>>>> Stashed changes
 import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.MenuService;
-import tdtu.edu.vn.service.NewsService;
 import tdtu.edu.vn.service.ProductService;
 
 @Controller
@@ -28,27 +23,20 @@ public class IndexController {
 	public ProductService productService;
 	public CategoryService categoryService;
 	public MenuService menuService;
-<<<<<<< Updated upstream
 	public UserRepository userRepository;
 
 //	
-	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService, UserRepository userRepository) {
-=======
-	public NewsService newsService;
+	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService, UserRepository userRepository) {}
 
+	public IndexController() {}
 //	
-	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService,NewsService newsService) {
->>>>>>> Stashed changes
+	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService) {
+
 		super();
 		this.productService = productService;
 		this.categoryService=categoryService;
 		this.menuService=menuService;
-<<<<<<< Updated upstream
-		this.userRepository=userRepository;
-=======
-		this.newsService=newsService;
-//		
->>>>>>> Stashed changes
+
 	}
 	@GetMapping({"/index", "/"})
 	public String index(Model model, HttpSession session) {
@@ -60,10 +48,10 @@ public class IndexController {
 		 }
 		return "index";
 	}
-	@ModelAttribute("news")
-	public List<News> allNews(){
-		return newsService.getAllNewss();
-	}
+//	@ModelAttribute("news")
+//	public List<News> allNews(){
+//		return newsService.getAllNewss();
+//	}
 	@ModelAttribute("category")
 	public List<Category> categgory(){
 		return categoryService.getAllCategorys();
