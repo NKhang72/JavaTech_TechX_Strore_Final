@@ -26,9 +26,9 @@ public class IndexController {
 	public UserRepository userRepository;
 	//public NewsService newsService;
 	
-	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService,UserRepository userRepository) {
+	//public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService,UserRepository userRepository) {}
 
-//	
+	
 	public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService, UserRepository userRepository) {
 		super();
 		this.productService = productService;
@@ -36,7 +36,7 @@ public class IndexController {
 		this.menuService=menuService;
 		this.userRepository=userRepository;
 		//this.newsService=newsService;
-		}
+	}
 
 	@GetMapping({"/index", "/"})
 	public String index(Model model, HttpSession session) {
