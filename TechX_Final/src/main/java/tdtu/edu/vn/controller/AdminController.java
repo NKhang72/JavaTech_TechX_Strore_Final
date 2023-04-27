@@ -69,16 +69,12 @@ public class AdminController {
 
 	
 
-	@GetMapping("/admin")
-	public String adminManager(Model model) {
-		model.addAttribute("products", productService.getAllProducts());
-		return "admin";
-	}
+	
 	@GetMapping("/admin/page")
-	public String adminManagerPage(Model model, @RequestParam("p") Optional<Integer> p) {
+	public String adminManagerPage(Model model, @RequestParam("p") Optional<Integer> p,@RequestParam("field") Optional<String> field) {
 		int c,pageCount;
-		int total=newsService.count();
-		if(total%2!=0) {
+		int total=productService.count();
+		if(total%7==0) {
 			pageCount=total/7;
 		}
 		else {
@@ -87,13 +83,14 @@ public class AdminController {
 		if(p==null || p.hashCode()<0 ) {
 			c=0;
 		}
-		else if(p.hashCode() > pageCount) {
+		else if(p.hashCode() >= pageCount) {
 			c=p.hashCode()-1;
 		}
 		else {
 			c=p.hashCode();
 		}
-		Pageable pageable= PageRequest.of(c, 7);
+		Sort sort= Sort.by(Direction.ASC, field.orElse("id"));
+		Pageable pageable= PageRequest.of(c, 7,sort);
 		Page<Product> page= productService.findAll(pageable);
 		model.addAttribute("products", page);
 		return "admin";

@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Shopping Cart</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
+<head th:replace="layout :: head"></head>
 <body>
-	<div class="container">
+	<div class="super_container">
+		<header th:replace="layout :: header"></header>
 		<h2>List Products</h2>
 		<div class="rows">
 			<div class="col-sm-9">
@@ -31,20 +23,21 @@
 							<td th:text="${cart.price}"></td>
 							<td th:text="${cart.qty}"></td>
 							<td th:text="${cart.total}"></td>
-							<td>
-								<a th:href="@{/cart/remove/{id}(id=${cart.id})}" class="btn btn-danger">Remove</a>
-							</td>
+							<td><a th:href="@{/cart/remove/{id}(id=${cart.id})}"
+								class="btn btn-danger">Remove</a></td>
 						</tr>
 					</tbody>
 
 				</table>
-				<p>Tong tien: <span th:text="${total_price}"></span></p>
-				
+				<p>
+					Tong tien: <span th:text="${total_price}"></span>
+				</p>
+
 				<hr />
 				<a class="btn btn-primary btn-sm" href="">Clear Cart</a>
 			</div>
 		</div>
-
+		<footer th:replace="layout :: footer"></footer>
 	</div>
 </body>
 </html>

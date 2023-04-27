@@ -74,6 +74,10 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public int count() {
+		return productRepository.findAll().size();
+	}
 	
 
 }

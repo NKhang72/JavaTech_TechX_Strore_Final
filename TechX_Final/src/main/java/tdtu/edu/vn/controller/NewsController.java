@@ -55,7 +55,7 @@ public class NewsController {
 	public String newsIndex(Model model, @RequestParam("p") Optional<Integer> p,@RequestParam("field") Optional<String> field) {
 		int c,pageCount;
 		int total=newsService.count();
-		if(total%2!=0) {
+		if(total%7!=0) {
 			pageCount=total/7;
 		}
 		else {

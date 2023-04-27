@@ -26,5 +26,7 @@ public interface ProductService {
 	public int removeProduct(Product product);
 
 	Product getProductById(Integer id);
+	public int count();
+
 
 }

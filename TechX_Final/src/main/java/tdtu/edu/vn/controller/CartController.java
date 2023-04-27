@@ -49,25 +49,25 @@ public class CartController {
 		return "redirect:/index";
 	}
 //
-//	@GetMapping("/detail/{id}")
-//	public String editProductForm(@PathVariable Long id, Model model) {
-//		Product product = new Product();
-//		product = productService.getProductById(id);
-//		model.addAttribute("product", product);
-//		if (product.getCategory().getName().equals("Phone")) {
-//			return "singlePhone";
-//		}
-//		if (product.getCategory().getName().equals("Laptop")) {
-//			return "singleLaptop";
-//		}
-//		if (product.getCategory().getName().equals("Tablet")) {
-//			return "singleTablet";
-//		}
-//		if (product.getCategory().getName().equals("Accessories")) {
-//			return "singleAccessories";
-//		}
-//
-//		return "admin";
-//
-//	}
+	@GetMapping("/detail/{id}")
+ 	public String editProductForm(@PathVariable Long id, Model model) {
+ 		Product product = new Product();
+ 		product = productServiceImpl.getProductById(id);
+ 		model.addAttribute("product", product);
+ 		if (product.getCategory().getName().equals("Phone")) {
+ 			return "singlePhone";
+ 		}
+ 		if (product.getCategory().getName().equals("Laptop")) {
+ 			return "singleLaptop";
+ 		}
+ 		if (product.getCategory().getName().equals("Tablet")) {
+ 			return "singleTablet";
+ 		}
+ 		if (product.getCategory().getName().equals("Accessories")) {
+ 			return "singleAccessories";
+ 		}
+ 
+ 		return "index";
+ 
+ 	}
 }

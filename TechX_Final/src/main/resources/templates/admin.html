@@ -56,19 +56,21 @@
 		<table class="table table-striped table-bordered">
 			<thead class="table-dark">
 				<tr>
-					<th>Name</th>
-					<th>Price</th>
-					<th>Quantity</th>
-					<th>Color</th>
-					<th>Description</th>
-					<th>Category</th>
-					<th>Image</th>
+				<th><a class="text-light" th:href="@{/admin/page?p=0&field=id}">ID</a></th>
+				<th><a class="text-light" th:href="@{/admin/page?p=0&field=name}">Name</a></th>
+				<th><a class="text-light" th:href="@{/admin/page?p=0&field=price}">Price</a></th>
+				<th><a class="text-light" th:href="@{/admin/page?p=0&field=quatity}">Quantity</a></th>
+				<th><a class="text-light" th:href="@{/admin/page?p=0&field=color}">Color</a></th>
+				<th><a class="text-light" th:href="@{/admin/page?p=0&field=description}">Description</a></th>
+				<th><a class="text-light" th:href="@{/admin/page?p=0&field=category}">Category</a></th>
+				<th><a class="text-light" th:href="@{/admin/page?p=0&field=image}">Image</a></th>
 					<th>Actions</th>
 				</tr>
 			</thead>
 
 			<tbody>
 				<tr th:each="product: ${products.content} ">
+				<td th:text="${product.id}"></td>
 					<td th:text="${product.name}"></td>
 					<td th:text="${product.price}"></td>
 					<td th:text="${product.quatity}"></td>
