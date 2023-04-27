@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 		 productRepository.deleteById(id);
 	}
 	@Override
-	public  List<Product> getProductByMeta(String meta){
+	public  Page<Product> getProductByMeta(String meta, Pageable pageable){
 		List<Product> allProduct =  productRepository.findAll();
 		List<Product> result=new ArrayList<Product>();
 		for( Product product: allProduct) {
@@ -57,7 +58,20 @@ public class ProductServiceImpl implements ProductService {
 				result.add(product);
 			}
 		}
-		return result;
+		Page<Product> out= new PageImpl<>(result);
+		return out;
+	}
+	@Override
+	public  int countProductByMeta(String meta){
+		List<Product> allProduct =  productRepository.findAll();
+		List<Product> result=new ArrayList<Product>();
+		for( Product product: allProduct) {
+			if( product.getCategory().getName().equals(meta)) {
+				result.add(product);
+			}
+		}
+		
+		return result.size();
 	}
 	@Override
 	public int addProduct(Product product) {

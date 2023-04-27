@@ -1,7 +1,11 @@
 package tdtu.edu.vn.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.Authentication;
@@ -10,11 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.Menu;
 import tdtu.edu.vn.entity.News;
+import tdtu.edu.vn.entity.Product;
 import tdtu.edu.vn.entity.User;
 import tdtu.edu.vn.repository.NewsRepository;
 import tdtu.edu.vn.repository.UserRepository;
@@ -66,25 +72,32 @@ public class IndexController {
 	public List<Menu> menu(){
 		return menuService.getAllMenus();
 	}
-	@GetMapping("/Phone")
-	public String Phone(Model model) {
-		model.addAttribute("products", productService.getProductByMeta("Phone"));
+	@GetMapping("/Category/page")
+	public String Category(Model model,  @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field,@RequestParam("type") Optional<String> category ) {
+//		int c,pageCount;
+//		int total=productService.countProductByMeta(category.orElse("Phone"));
+//		if(total%2==0) {
+//			pageCount=total/2;
+//		}
+//		else {
+//			pageCount=(total/2)+1;
+//		}
+//		if(p==null || p.hashCode()<0 ) {
+//			c=0;
+//		}
+//		else if(p.hashCode() >= pageCount) {
+//			c=p.hashCode()-1;
+//		}
+//		else {
+//			c=p.hashCode();
+//		}
+		Sort sort= Sort.by(Direction.ASC, field.orElse("price"));
+		Pageable pageable= PageRequest.of(p.orElse(0),2,sort);
+		Page<Product> page= productService.getProductByMeta(category.orElse("Phone"), pageable);
+		model.addAttribute("products", page);
 		return "categories";
 	}
-	@GetMapping("/Laptop")
-	public String Laptop(Model model) {
-		model.addAttribute("products", productService.getProductByMeta("Laptop"));
-		return "categories";
-	}
-	@GetMapping("/Tablet")
-	public String Tablet(Model model) {
-		model.addAttribute("products", productService.getProductByMeta("Tablet"));
-		return "categories";
-	}
-	@GetMapping("/Accessories")
-	public String Accessories(Model model) {
-		model.addAttribute("products", productService.getProductByMeta("Accessories"));
-		return "categories";
-	}
+
 
 }

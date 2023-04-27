@@ -107,7 +107,7 @@
 						</div>
 						<nav class="navbar">
 							<ul class="navbar_menu">
-								<li th:each="menu : ${menu}" ><a th:href="@{'/'+ ${menu.meta}}" th:text="${menu.name}">home</a></li>
+								<li th:each="menu : ${menu}" ><a th:href="@{'/Category/page?p=0&field=price&type='+${menu.name}}" th:text="${menu.name}">home</a></li>
 								
 							</ul>
 							<ul class="navbar_user">

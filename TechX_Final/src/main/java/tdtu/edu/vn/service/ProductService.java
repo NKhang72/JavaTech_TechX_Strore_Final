@@ -19,7 +19,7 @@ public interface ProductService {
 
 	public void deleteProductById(Long id);
 	
-	public List<Product> getProductByMeta(String meta);
+	public Page<Product> getProductByMeta(String meta, Pageable pageable);
 	
 	public int addProduct(Product product);
 	
@@ -27,6 +27,7 @@ public interface ProductService {
 
 	Product getProductById(Integer id);
 	public int count();
+	public  int countProductByMeta(String meta);
 
 
 }
