@@ -59,5 +59,21 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return result;
 	}
+	@Override
+	public int addProduct(Product product) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int removeProduct(Product product) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public Product getProductById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 }

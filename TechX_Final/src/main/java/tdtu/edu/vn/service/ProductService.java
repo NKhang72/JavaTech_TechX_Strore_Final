@@ -20,5 +20,11 @@ public interface ProductService {
 	public void deleteProductById(Long id);
 	
 	public List<Product> getProductByMeta(String meta);
+	
+	public int addProduct(Product product);
+	
+	public int removeProduct(Product product);
+
+	Product getProductById(Integer id);
 
 }
