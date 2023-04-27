@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import tdtu.edu.vn.entity.News;
@@ -50,6 +51,20 @@ public class NewsServiceImpl implements NewsService{
 	@Override
 	public int count() {
 		return newsRepository.findAll().size();
+	}
+	@Override
+	public List<News> getAllNewss(){
+		
+		Sort sort=Sort.by(Direction.DESC,"createDate");
+		List<News> listNews= newsRepository.findAll(sort);
+		List<News> result= new ArrayList<News>();
+		int n=listNews.size();
+		for (int i=0; i<n;i++) {
+			if(i<3) {
+				result.add(listNews.get(i));
+			}
+		}
+		return result;
 	}
 
 }

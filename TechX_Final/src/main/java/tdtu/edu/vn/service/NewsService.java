@@ -21,6 +21,8 @@ public interface NewsService {
 	public void deleteNewsById(Long id);
 	
 	public int count();
+	
+	public List<News> getAllNewss();
 
 
 }

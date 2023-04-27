@@ -45,7 +45,7 @@ tinymce.init({
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		<!-- Brand -->
-		<a class="navbar-brand" th:href="@{/admin}">Tech X Store
+		<a class="navbar-brand" th:href="@{/admin/page}">Tech X Store
 			Management System</a>
 
 		<!-- Toggler/collapsibe Button -->
@@ -57,8 +57,19 @@ tinymce.init({
 		<!-- Navbar links -->
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" th:href="@{/admin}">Product
-						Management</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/admin/page}">Product</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/admin}">Order
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/news/page}">News </a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/users}">Users </a></li>
+				<li class="nav-item">
+					<form th:action="@{/logout}" method="post">
+						<input type="submit" value="Sign Out" />
+					</form>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -68,7 +79,7 @@ tinymce.init({
 		<div class="row">
 			<div
 				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class="text-center">Create New product</h1>
+				<h1 class="text-center">Create News</h1>
 				<div class="card-body">
 					<form th:action="@{/admin/news/new}" th:object="${news}"
 						enctype="multipart/form-data" method="POST">
