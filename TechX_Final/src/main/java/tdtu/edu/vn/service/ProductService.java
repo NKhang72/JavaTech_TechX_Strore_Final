@@ -2,11 +2,14 @@ package tdtu.edu.vn.service;
 
 import java.util.List;
 
-import tdtu.edu.vn.entity.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import tdtu.edu.vn.entity.Product;
 
 public interface ProductService {
 	public List<Product> getAllProducts();
+	
+	public Page<Product> findAll(Pageable pageable);
 
 	public Product saveProduct(Product product);
 

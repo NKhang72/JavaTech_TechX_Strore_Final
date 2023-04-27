@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Tech X Store Management System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<script type="text/javascript"
+	th:src="@{/tinymce/js/tinymce/tinymce.min.js}"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: '#content',
+    plugins: "image code",
+    image_title: true,
+    automatic_uploads: true,
+    file_picker_types: 'image',
+    file_picker_callback: function(cb, value, meta) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.onchange = function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function () {
+                var id = 'blobid' + (new Date()).getTime();
+                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(',')[1];
+                var blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+                cb(blobInfo.blobUri(), {title: file.name});
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    }
+  });
+</script>
+
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" th:href="@{/admin}">Tech X Store
+			Management System</a>
+
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" th:href="@{/admin}">Product
+						Management</a></li>
+			</ul>
+		</div>
+	</nav>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div
+				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center">Update News</h1>
+				<div class="card-body">
+					<form name="htmltest" th:action="@{/admin/news/{id} (id=${news.id})}" th:object="${news}"
+						enctype="multipart/form-data" method="POST">
+						<div class="form-group">
+							<label> Title</label> <input type="text" name="title"
+								th:field="*{title}" class="form-control"
+								placeholder="Enter title" required />
+						</div>
+						<div class="form-group">
+							<label> Content </label> <textarea id="content" type="text" name="content"
+								th:field="*{content}" class="form-control"
+								placeholder="Enter content" required> </textarea>
+					
+						<div class="form-group">
+							
+								<input type="checkbox" id="hide" name="hide" value="*{hide}" th:checked="${news.hide} ">
+								<label >Hide</label>
+							
+						</div>
+						<div class="form-group">
+							<label> Image </label> <input required th:field="*{image}" th:value="'uploads/'+ ${news.image}" type="file"
+								name="image" accept="image/png, image/jpeg" class="form-control" />
+						</div>
+						<div class="box-footer">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+					<span th:if="${msg != null}" th:text="${msg}"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -12,8 +12,32 @@
 	th:src="@{/tinymce/js/tinymce/tinymce.min.js}"></script>
 <script type="text/javascript">
 tinymce.init({
-    selector: '#description'
-});
+    selector: '#content',
+    plugins: "image code",
+    image_title: true,
+    automatic_uploads: true,
+    file_picker_types: 'image',
+    file_picker_callback: function(cb, value, meta) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.onchange = function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function () {
+                var id = 'blobid' + (new Date()).getTime();
+                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(',')[1];
+                var blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+                cb(blobInfo.blobUri(), {title: file.name});
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    }
+  });
 </script>
 
 
@@ -46,142 +70,27 @@ tinymce.init({
 				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
 				<h1 class="text-center">Create New product</h1>
 				<div class="card-body">
-					<form th:action="@{/admin}" th:object="${product}"
+					<form th:action="@{/admin/news/new}" th:object="${news}"
 						enctype="multipart/form-data" method="POST">
 						<div class="form-group">
-							<label> Product Name </label> <input type="text" name="name"
-								th:field="*{name}" class="form-control"
-								placeholder="Enter Product's Name" />
+							<label> Title</label> <input required type="text" name="title"
+								th:field="*{title}" class="form-control"
+								placeholder="Enter title" />
 						</div>
 						<div class="form-group">
-							<label> Price </label> <input type="number" name="price"
-								th:field="*{price}" class="form-control"
-								placeholder="Enter Product's Price" />
-						</div>
-						<!-- 						<div class="form-group"> -->
-						<!-- 							<label> Color </label> <input type="text" name="color" -->
-						<!-- 								th:field="*{color}" class="form-control" -->
-						<!-- 								placeholder="Enter Product's Color" /> -->
-						<!-- 						</div> -->
+							<label> Content </label> <textarea  id="content" type="text" name="content"
+								th:field="*{content}" class="form-control"
+								placeholder="Enter content" > </textarea>
+					
 						<div class="form-group">
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="white" name="white"
-									class="custom-control-input" value="White" th:field="*{color}">
-								<label class="custom-control-label" for="white">White</label>
-							</div>
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="gold" name="gold"
-									class="custom-control-input" value="Gold" th:field="*{color}">
-								<label class="custom-control-label" for="gold">Gold</label>
-							</div>
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="black" name="black"
-									class="custom-control-input" value="Black" th:field="*{color}">
-								<label class="custom-control-label" for="black">Black</label>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label> Quatity </label> <input type="number" name="quatity"
-								th:field="*{quatity}" class="form-control"
-								placeholder="Enter Product's Quatity" />
+							
+								<input  type="checkbox" id="hide" name="hide" value="*{hide}" >
+								<label >Hide</label>
+							
 						</div>
 						<div class="form-group">
-							<label> Year Version </label> <input type="text" name="year"
-								th:field="*{year}" class="form-control"
-								placeholder="Enter Product's Version" />
-						</div>
-						<div class="form-group">
-							<label> Description </label>
-							<textarea type="text" name="description" rows="5"
-								th:field="*{description}" class="form-control content"
-								placeholder="Enter Product's Description" /></textarea>
-						</div>
-						<div class="form-group">
-							<label> Screen Type </label> <input type="text"
-								name="screen_type" th:field="*{screen_type}"
-								class="form-control" placeholder="Enter Product's Sreen Type" />
-						</div>
-						<div class="form-group">
-							<label> Resolution </label> <input type="text" name="screen"
-								th:field="*{screen}" class="form-control"
-								placeholder="Enter Product's Screen Resolution" />
-						</div>
-						<div class="form-group">
-							<label> CPU </label> <input type="text" name="cpu"
-								th:field="*{cpu}" class="form-control"
-								placeholder="Enter Product's CPU" />
-						</div>
-						<div class="form-group">
-							OS:
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="iOS" name="iOS"
-									class="custom-control-input" value="iOS" th:field="*{os}">
-								<label class="custom-control-label" for="iOS">iOS</label>
-							</div>
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="android" name="android"
-									class="custom-control-input" value="android" th:field="*{os}">
-								<label class="custom-control-label" for="android">Android</label>
-							</div>
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="masOS" name="masOS"
-									class="custom-control-input" value="masOS" th:field="*{os}">
-								<label class="custom-control-label" for="masOS">masOS</label>
-
-							</div>
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="Windown" name="Windown"
-									class="custom-control-input" value="Windown" th:field="*{os}">
-								<label class="custom-control-label" for="Windown">Windown</label>
-							</div>
-							<div class="custom-control custom-radio custom-control-inline">
-								<input type="radio" id="watchOS" name="watchOS"
-									class="custom-control-input" value="watchOS" th:field="*{os}">
-								<label class="custom-control-label" for="watchOS">watchOS</label>
-
-							</div>
-						</div>
-						<div class="form-group">
-							<label> Ram </label> <input type="text" name="ram"
-								th:field="*{ram}" class="form-control"
-								placeholder="Enter Product's Ram" />
-						</div>
-						<div class="form-group">
-							<label> Rom </label> <input type="text" name="rom"
-								th:field="*{rom}" class="form-control"
-								placeholder="Enter Product's Rom" />
-						</div>
-						<div class="form-group">
-							<label> Front Camera </label> <input type="text"
-								name="frontCamera" th:field="*{frontCamera}"
-								class="form-control" placeholder="Enter Product's Front Camera" />
-						</div>
-						<div class="form-group">
-							<label> Back Camere </label> <input type="text" name="backCamera"
-								th:field="*{backCamera}" class="form-control"
-								placeholder="Enter Product's Back Camera" />
-						</div>
-						<div class="form-group">
-							<label> Battery </label> <input type="text" name="battery"
-								th:field="*{battery}" class="form-control"
-								placeholder="Enter Product's Battery" />
-						</div>
-						<div class="form-group">
-							<label> Category </label> <select name="category" id="category"
-								class="form-select form-control">
-								<option th:each="category : ${category}"
-									th:value="${category.id}" th:text="${category.name}" />
-							</select>
-						</div>
-						<div class="form-group">
-							<label> Image </label> <input th:field="*{image}" type="file"
+							<label> Image </label> <input  th:field="*{image}" type="file"
 								name="image" accept="image/png, image/jpeg" class="form-control" />
-							<label> Image 1</label> <input th:field="*{image1}" type="file"
-								name="image1" accept="image/png, image/jpeg"
-								class="form-control" /> <label> Image 2 </label> <input
-								th:field="*{image2}" type="file" name="image2"
-								accept="image/png, image/jpeg" class="form-control" />
 						</div>
 						<div class="box-footer">
 							<button type="submit" class="btn btn-primary">Submit</button>

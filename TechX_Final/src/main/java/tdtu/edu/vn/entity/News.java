@@ -24,8 +24,7 @@ public class News {
 	@Column(name="create_day")
 	Date createDate= new Date();
 	
-	@Column(name = "meta", nullable = false)
-	private String meta;
+	
 	
 	@Column(name = "hide")
 	private Boolean hide;
@@ -38,12 +37,11 @@ public class News {
 
 	
 
-	public News(String title, String content, Date createDate, String meta, Boolean hide, String image) {
+	public News(String title, String content, Date createDate, Boolean hide, String image) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.createDate = createDate;
-		this.meta = meta;
 		this.hide = hide;
 		this.image = image;
 	}
@@ -94,13 +92,6 @@ public class News {
 		this.createDate = createDate;
 	}
 
-	public String getMeta() {
-		return meta;
-	}
-
-	public void setMeta(String meta) {
-		this.meta = meta;
-	}
 
 	public Boolean getHide() {
 		return hide;

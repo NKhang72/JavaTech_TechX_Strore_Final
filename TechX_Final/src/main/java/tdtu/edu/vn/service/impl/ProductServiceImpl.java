@@ -3,6 +3,8 @@ package tdtu.edu.vn.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import tdtu.edu.vn.entity.Product;
@@ -20,6 +22,12 @@ public class ProductServiceImpl implements ProductService {
 	{
 		return productRepository.findAll();
 	}
+	@Override
+	public Page<Product> findAll(Pageable pageable)
+	{
+		return productRepository.findAll(pageable);
+	}
+
 	@Override
 	public Product saveProduct(Product Product)
 	{

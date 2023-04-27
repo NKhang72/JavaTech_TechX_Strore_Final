@@ -6,8 +6,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +28,7 @@ import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.News;
 import tdtu.edu.vn.entity.Product;
 import tdtu.edu.vn.entity.User;
+import tdtu.edu.vn.repository.ProductRepository;
 import tdtu.edu.vn.repository.UserRepository;
 import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.MenuService;
@@ -65,6 +72,30 @@ public class AdminController {
 	@GetMapping("/admin")
 	public String adminManager(Model model) {
 		model.addAttribute("products", productService.getAllProducts());
+		return "admin";
+	}
+	@GetMapping("/admin/page")
+	public String adminManagerPage(Model model, @RequestParam("p") Optional<Integer> p) {
+		int c,pageCount;
+		int total=newsService.count();
+		if(total%2!=0) {
+			pageCount=total/7;
+		}
+		else {
+			pageCount=(total/7)+1;
+		}
+		if(p==null || p.hashCode()<0 ) {
+			c=0;
+		}
+		else if(p.hashCode() > pageCount) {
+			c=p.hashCode()-1;
+		}
+		else {
+			c=p.hashCode();
+		}
+		Pageable pageable= PageRequest.of(c, 7);
+		Page<Product> page= productService.findAll(pageable);
+		model.addAttribute("products", page);
 		return "admin";
 	}
 		
@@ -132,7 +163,7 @@ public class AdminController {
 		}
 		productService.saveProduct(product_new);
 
-		return "redirect:/admin";
+		return "redirect:/admin/page";
 	}
 
 	@GetMapping("/admin/edit/{id}")
@@ -201,25 +232,40 @@ public class AdminController {
 		}
 		// save updated watch object
 		productService.updateProduct(existingProduct);
-		return "redirect:/admin";
+		return "redirect:/admin/page";
 	}
 
 	@GetMapping("/admin/{id}")
 	public String deleteProduct(@PathVariable Long id) {
 		productService.deleteProductById(id);
-		return "redirect:/admin";
+		return "redirect:/admin/page";
 	}
-	@GetMapping("/admin/news")
-	public String showNews(Model model) {
-		model.addAttribute("newss", newsService.getAllNewss());
+	
+	@GetMapping("/admin/news/page")
+	public String newsIndex(Model model, @RequestParam("p") Optional<Integer> p,@RequestParam("field") Optional<String> field) {
+		int c,pageCount;
+		int total=newsService.count();
+		if(total%7==0) {
+			pageCount=total/7;
+		}
+		else {
+			pageCount=(total/7)+1;
+		}
+		if(p==null || p.hashCode()<0 ) {
+			c=0;
+		}
+		else if(p.hashCode() >= pageCount) {
+			c=p.hashCode()-1;
+		}
+		else {
+			c=p.hashCode();
+		}
+		Sort sort= Sort.by(Direction.ASC, field.orElse("id"));
+		Pageable pageable= PageRequest.of(c, 7,sort);
+		Page<News> page= newsService.findAll(pageable);
+		
+		model.addAttribute("listNews", page);
 		return "list_news";
-	}
-	@GetMapping("/admin/news/new")
-	public String createNewsForm(Model model) {
-		News news= new News();
-		model.addAttribute("news", news);
-		return "create_news";
-
 	}
 	@GetMapping("/admin/users")
 	public String showUsers(Model model) {

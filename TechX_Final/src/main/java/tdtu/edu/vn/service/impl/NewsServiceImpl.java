@@ -3,9 +3,13 @@ package tdtu.edu.vn.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import tdtu.edu.vn.entity.News;
+import tdtu.edu.vn.entity.Product;
 import tdtu.edu.vn.repository.NewsRepository;
 import tdtu.edu.vn.service.NewsService;
 
@@ -17,19 +21,11 @@ public class NewsServiceImpl implements NewsService{
 		this.newsRepository = newsRepository;
 	}
 	@Override
-	public List<News> getAllNewss()
+	public Page<News> findAll(Pageable pageable)
 	{
-		
-//		List<News> News = newsRepository.findAll();
-//		List<News> result = new ArrayList<News>();
-//		for (News news : News) {
-//			if (news.getHide() == true) {
-//				result.add(news);
-//			}
-//		}
-
-		return newsRepository.findAll();
+		return newsRepository.findAll(pageable);
 	}
+	
 	
 	@Override
 	public News saveNews(News news)
@@ -50,6 +46,10 @@ public class NewsServiceImpl implements NewsService{
 	public void deleteNewsById(Long id) 
 	{
 		 newsRepository.deleteById(id);
+	}
+	@Override
+	public int count() {
+		return newsRepository.findAll().size();
 	}
 
 }

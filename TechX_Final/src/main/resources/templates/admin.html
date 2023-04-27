@@ -10,93 +10,102 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <!-- Brand -->
-  <a class="navbar-brand" th:href="@{/admin}">Tech X Store Management System</a>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" th:href="@{/admin}">Tech X Store
+			Management System</a>
 
-  <!-- Toggler/collapsibe Button -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-  <!-- Navbar links -->
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin}">Product</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin}">Order </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/news}">News </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/users}">Users </a>
-      </li>
-      <li class="nav-item">
-	      <form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" />
-		  </form>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-	<div class ="container">
-		<div class = "row">
-			<h1> List Product </h1>
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" th:href="@{/admin/page}">Product</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/admin}">Order
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/news/page}">News </a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/users}">Users </a></li>
+				<li class="nav-item">
+					<form th:action="@{/logout}" method="post">
+						<input type="submit" value="Sign Out" />
+					</form>
+				</li>
+			</ul>
 		</div>
-		
-		<div class = "row">
-			<div class = "col-lg-3">
-				<a th:href = "@{/admin/new}" class = "btn btn-primary btn-sm mb-3"> Add Product</a>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<h1>List Product</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-3">
+				<a th:href="@{/admin/new}" class="btn btn-primary btn-sm mb-3">
+					Add Product</a>
 			</div>
 		</div>
-		
-		<table class = "table table-striped table-bordered">
-			<thead class = "table-dark">
+
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
 				<tr>
-					<th> Name</th>
-					<th> Price</th>
-					<th> Quantity </th>
-					<th> Color </th>
-					<th> Description </th>
-					<th> Category </th> 
-					<th> Image </th>
-					<th> Actions </th>
+					<th>Name</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Color</th>
+					<th>Description</th>
+					<th>Category</th>
+					<th>Image</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
-			
+
 			<tbody>
-				<tr th:each = "product: ${products} ">
-					<td th:text = "${product.name}"></td>
-					<td th:text = "${product.price}"></td>
-					<td th:text = "${product.quatity}"></td>
-					<td th:text = "${product.color}"></td>
-					<td th:utext = "${product.description}"></td>
-					<td th:text = "${product.category.getName()}"></td> 
-					<td style="width:200px; height:200px; text-align:center; vertical-align:middle" >
-					
-					<img th:src="@{'getimage/'+ ${product.image}}" alt="" style="max-height:100%; max-width:100%">
-					<img th:src="@{'getimage/'+ ${product.image1}}" alt="" style="max-height:100%; max-width:100%">
-					<img th:src="@{'getimage/'+ ${product.image2}}" alt="" style="max-height:100%; max-width:100%">
+				<tr th:each="product: ${products.content} ">
+					<td th:text="${product.name}"></td>
+					<td th:text="${product.price}"></td>
+					<td th:text="${product.quatity}"></td>
+					<td th:text="${product.color}"></td>
+					<td th:utext="${product.description}"></td>
+					<td th:text="${product.category.getName()}"></td>
+					<td
+						style="width: 200px; height: 200px; text-align: center; vertical-align: middle">
+
+						<img th:src="@{'getimage/'+ ${product.image}}" alt=""
+						style="max-height: 100%; max-width: 100%"> <img
+						th:src="@{'getimage/'+ ${product.image1}}" alt=""
+						style="max-height: 100%; max-width: 100%"> <img
+						th:src="@{'getimage/'+ ${product.image2}}" alt=""
+						style="max-height: 100%; max-width: 100%">
 					</td>
-					<td>
-						 <a th:href = "@{/admin/edit/{id}(id=${product.id})}"
-						 class = "btn btn-primary">Update</a>
-						
-						<a th:href = "@{/admin/{id}(id=${product.id})}" 
- 						 class = "btn btn-danger">Delete</a>  
- 						 <a th:href = "@{/admin/detail/{id}(id=${product.id})}" 
- 						 class = "btn btn-danger">Detail</a> 
-						 
-					</td>
+					<td><a th:href="@{/admin/edit/{id}(id=${product.id})}"
+						class="btn btn-primary">Update</a> <a
+						th:href="@{/admin/{id}(id=${product.id})}" class="btn btn-danger">Delete</a>
+						<a th:href="@{/admin/detail/{id}(id=${product.id})}"
+						class="btn btn-info">Detail</a></td>
 				</tr>
 			</tbody>
-		
+
 		</table>
-		
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/page?p='+${products.number-1}}">Previous</a></li>
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/page?p='+${products.number+1}}">Next</a></li>
+				<li class="page-item"><a class="page-link"
+					href="/admin/page?p=0">First</a></li>
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/page?p='+${products.totalPages-1}}">Last</a></li>
+			</ul>
+		</nav>
 	</div>
 </body>
 </html>

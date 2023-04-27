@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="layout :: head"></head>
+<body>
+
+</body>
+<div class="super_container">
+	<header th:replace="layout :: header"></header>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+				<div class="page-wrapper">
+					<div class="blog-top clearfix">
+						<h4 class="pull-left">
+							Recent News <a href="#"><i class="fa fa-rss"></i></a>
+						</h4>
+					</div>
+					<!-- end blog-top -->
+
+					<div class="blog-list clearfix"
+						th:each="news : ${listNews.content}">
+						<div class="blog-box row">
+							<div class="col-md-4">
+								<div class="post-media">
+									<a href="tech-single.html" title=""> <img
+										th:src="@{'/getimage/'+ ${news.image}}" alt=""
+										class="img-fluid">
+										<div class="hovereffect"></div>
+									</a>
+								</div>
+								<!-- end media -->
+							</div>
+							<!-- end col -->
+
+							<div class="blog-meta big-meta col-md-8 ">
+								<h4>
+									<a th:text="${news.title}" th:href="@{/news/detail/{id}(id=${news.id})}" title="">Top
+										10 phone applications and 2017 mobile design awards</a>
+								</h4>
+								
+								
+								<a th:href="@{/news/detail/{id}(id=${news.id})}" title="" th:text="${news.createDate}">21
+									July, 2017</a></small> <small><a th:href="@{/news/detail/{id}(id=${news.id})}" title="">by
+										Matilda</a></small>
+
+							</div>
+							<!-- end meta -->
+						</div>
+						<!-- end blog-box -->
+
+						<hr class="invis">
+
+					</div>
+					<!-- end blog-list -->
+				</div>
+				<!-- end page-wrapper -->
+
+				<hr class="invis">
+
+				<div class="row">
+					<div class="col-md-12">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<li class="page-item"><a class="page-link"
+									th:href="@{'/news/page?p='+${listNews.number-1}}">Previous</a></li>
+								<li class="page-item"><a class="page-link"
+									th:href="@{'/news/page?p='+${listNews.number+1}}">Next</a></li>
+								<li class="page-item"><a class="page-link"
+									href="/news/page?p=0">First</a></li>
+								<li class="page-item"><a class="page-link"
+									th:href="@{'/news/page?p='+${listNews.totalPages-1}}">Last</a></li>
+							</ul>
+						</nav>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+				</div>
+				<!-- end col -->
+
+				
+				<!-- end col -->
+			</div>
+			<!-- end row -->
+		</div>
+		<!-- end container -->
+
+		<footer th:replace="layout :: footer"></footer>
+	</div>
+	<script type="text/javascript" th:src="@{/news/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/news/Sjs/tether.min.js}"></script>
+	<script type="text/javascript" th:src="@{/news/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/news/js/custom.js}"></script>
+</html>

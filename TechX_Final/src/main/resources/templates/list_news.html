@@ -7,86 +7,127 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <!-- Brand -->
-  <a class="navbar-brand" th:href="@{/admin}">Tech X Store Management System</a>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" th:href="@{/admin}">Tech X Store
+			Management System</a>
 
-  <!-- Toggler/collapsibe Button -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<button type="button" class="btn btn-danger"
+							data-target="#deleteModal" data-toggle="modal">Delete
+							Item</button>
 
-  <!-- Navbar links -->
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin}">Product</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin}">Order </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/news}">News </a>
-      </li>
-      <li class="nav-item">
-	      <form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" />
-		  </form>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-	<div class ="container">
-		<div class = "row">
-			<h1> List Product </h1>
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" th:href="@{/admin}">Product</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/admin}">Order
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/news}">News </a></li>
+				<li class="nav-item">
+					<form th:action="@{/logout}" method="post">
+						<input type="submit" value="Sign Out" />
+					</form>
+				</li>
+			</ul>
 		</div>
-		
-		<div class = "row">
-			<div class = "col-lg-3">
-				<a th:href = "@{/admin/news/new}" class = "btn btn-primary btn-sm mb-3"> Add News</a>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<h1>List Product</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-3">
+				<a th:href="@{/admin/news/new}" class="btn btn-primary btn-sm mb-3">
+					Add News</a>
 			</div>
 		</div>
-		
-		<table class = "table table-striped table-bordered">
-			<thead class = "table-dark">
+
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
 				<tr>
-					<th> Title</th>
-					<th> Hide</th>
-					<th> Create day </th>
-					<th> Image </th>
-					<th> Actions </th>
+					<th><a class="text-light" th:href="@{/admin/news/page?p=0&field=id}">ID</a></th>
+					<th><a class="text-light" th:href="@{/admin/news/page?p=0&field=title}">Title</a></th>
+					<th><a class="text-light" th:href="@{/admin/news/page?p=0&field=hide}">Hide</a></th>
+					<th><a class="text-light" th:href="@{/admin/news/page?p=0&field=createDate}">Create date</a></th>
+					<th><a class="text-light" th:href="@{/admin/news/page?p=0&field=image}">Image</a></th>
+					<th class="text-light">Actions</th>
 				</tr>
 			</thead>
-			
+
 			<tbody>
-				<tr th:each = "news: ${newss} ">
-					<td th:text = "${news.title}"></td>
-					<td th:text = "${news.hide}"></td>
-					<td th:text = "${news.createDate}"></td> 
-					<td style="width:200px; height:200px; text-align:center; vertical-align:middle" >
-					
-					<img th:src="@{'getimage/'+ ${news.image}}" alt="" style="max-height:100%; max-width:100%">
+				<tr th:each="news: ${listNews} ">
+					<td th:text="${news.id}"></td>
+					<td th:text="${news.title}"></td>
+					<td th:text="${news.hide}"></td>
+					<td th:text="${news.createDate}"></td>
+					<td
+						style="width: 200px; height: 200px; text-align: center; vertical-align: middle">
+
+						<img th:src="@{'/getimage/'+ ${news.image}}" alt=""
+						style="max-height: 100%; max-width: 100%">
+
 					</td>
-					<td>
-						 <a th:href = "@{/admin/edit/{id}(id=${news.id})}"
-						 class = "btn btn-primary">Update</a>
-						
-						<a th:href = "@{/admin/{id}(id=${news.id})}" 
- 						 class = "btn btn-danger">Delete</a>  
- 						 
- 						 <a th:href = "@{/admin/detail/{id}(id=${news.id})}" 
- 						 class = "btn btn-danger">Detail</a> 
-						 
-					</td>
+
+					<td><a th:href="@{/admin/news/edit/{id}(id=${news.id})}"
+						class="btn btn-primary">Update</a>
+						<button type="button" class="btn btn-danger"
+							data-target="#deleteModal" data-toggle="modal">Delete
+							Item</button> <a th:href="@{/news/detail/{id}(id=${news.id})}"
+						class="btn btn-info">Detail</a></td>
 				</tr>
 			</tbody>
-		
+
 		</table>
-		
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/news/page?p='+${listNews.number-1}}">Previous</a></li>
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/news/page?p='+${listNews.number+1}}">Next</a></li>
+				<li class="page-item"><a class="page-link"
+					href="/admin/news/page?p=0">First</a></li>
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/news/page?p='+${listNews.totalPages-1}}">Last</a></li>
+			</ul>
+		</nav>
+
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="deleteModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure you want to delete?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="close-modal">No</button>
+					<button type="button" class="btn btn-danger">Yes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>
