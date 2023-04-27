@@ -75,25 +75,25 @@ public class IndexController {
 	@GetMapping("/Category/page")
 	public String Category(Model model,  @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field,@RequestParam("type") Optional<String> category ) {
-//		int c,pageCount;
-//		int total=productService.countProductByMeta(category.orElse("Phone"));
-//		if(total%2==0) {
-//			pageCount=total/2;
-//		}
-//		else {
-//			pageCount=(total/2)+1;
-//		}
-//		if(p==null || p.hashCode()<0 ) {
-//			c=0;
-//		}
-//		else if(p.hashCode() >= pageCount) {
-//			c=p.hashCode()-1;
-//		}
-//		else {
-//			c=p.hashCode();
-//		}
+ 		int c,pageCount;
+ 		int total=productService.countProductByMeta(category.orElse("Phone"));
+ 		if(total%10==0) {
+ 			pageCount=total/10;
+ 		}
+ 		else {
+ 			pageCount=(total/10)+1;
+ 		}
+ 		if(p==null || p.hashCode()<0 ) {
+ 			c=0;
+ 		}
+ 		else if(p.hashCode() >= pageCount) {
+ 			c=p.hashCode()-1;
+ 		}
+ 		else {
+ 			c=p.hashCode();
+ 		}
 		Sort sort= Sort.by(Direction.ASC, field.orElse("price"));
-		Pageable pageable= PageRequest.of(p.orElse(0),2,sort);
+		Pageable pageable= PageRequest.of(c,10,sort);
 		Page<Product> page= productService.getProductByMeta(category.orElse("Phone"), pageable);
 		model.addAttribute("products", page);
 		return "categories";
