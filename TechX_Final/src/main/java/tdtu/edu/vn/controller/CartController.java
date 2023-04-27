@@ -1,6 +1,7 @@
 package tdtu.edu.vn.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import tdtu.edu.vn.entity.Cart;
 import tdtu.edu.vn.entity.Product;
+import tdtu.edu.vn.entity.User;
+import tdtu.edu.vn.repository.UserRepository;
 import tdtu.edu.vn.service.impl.CartServiceImpl;
 import tdtu.edu.vn.service.impl.ProductServiceImpl;
 
@@ -20,11 +23,19 @@ public class CartController {
 	
 	@Autowired
 	private ProductServiceImpl productServiceImpl;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@GetMapping
 	public String index(Model model) {
 		model.addAttribute("carts", cartServiceImpl.getAllItem());
 		model.addAttribute("total_price", cartServiceImpl.totalPrice());
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		 User user = userRepository.findByEmail(email);
+		 if (user != null) {
+			 model.addAttribute("firstName", user.getFirstName());
+		 }
 		return "cart";
 	}
 	
@@ -54,6 +65,11 @@ public class CartController {
  		Product product = new Product();
  		product = productServiceImpl.getProductById(id);
  		model.addAttribute("product", product);
+ 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		 User user = userRepository.findByEmail(email);
+		 if (user != null) {
+			 model.addAttribute("firstName", user.getFirstName());
+		 }
  		if (product.getCategory().getName().equals("Phone")) {
  			return "singlePhone";
  		}

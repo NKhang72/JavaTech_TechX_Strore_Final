@@ -96,6 +96,11 @@ public class IndexController {
 		Pageable pageable= PageRequest.of(c,10,sort);
 		Page<Product> page= productService.getProductByMeta(category.orElse("Phone"), pageable);
 		model.addAttribute("products", page);
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		 User user = userRepository.findByEmail(email);
+		 if (user != null) {
+			 model.addAttribute("firstName", user.getFirstName());
+		 }
 		return "categories";
 	}
 
