@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import tdtu.edu.vn.entity.Category;
+import tdtu.edu.vn.entity.Menu;
 import tdtu.edu.vn.entity.News;
 import tdtu.edu.vn.entity.Product;
 import tdtu.edu.vn.repository.UserRepository;
@@ -70,13 +72,14 @@ public class NewsController {
 		else {
 			c=p.hashCode();
 		}
-		Sort sort= Sort.by(Direction.DESC, field.orElse("id"));
+		Sort sort= Sort.by(Direction.DESC, field.orElse("createDate"));
 		Pageable pageable= PageRequest.of(c, 7,sort);
 		
-		Page<News> page= newsService.findAll(pageable);
+		Page<News> page= newsService.getAllNewsShow(pageable);
 		model.addAttribute("listNews", page);
 		return "news";
 	}
+	
 	@GetMapping("/news/detail/{id}")
 	public String newsDetail(@PathVariable Long id, Model model) {
 		model.addAttribute("news", newsService.getNewsById(id));
@@ -163,6 +166,14 @@ public class NewsController {
 	public String deleteNews(@PathVariable Long id) {
 		newsService.deleteNewsById(id);
 		return "redirect:/admin/news/page";
+	}
+	@ModelAttribute("category")
+	public List<Category> categgory(){
+		return categoryService.getAllCategorys();
+	}
+	@ModelAttribute("menu")
+	public List<Menu> menu(){
+		return menuService.getAllMenus();
 	}
 	
 

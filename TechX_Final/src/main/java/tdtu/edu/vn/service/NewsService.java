@@ -22,7 +22,7 @@ public interface NewsService {
 	
 	public int count();
 	
-	public List<News> getAllNewss();
+	public Page<News> getAllNewsShow(Pageable pageable);
 
 
 }

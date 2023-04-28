@@ -44,7 +44,7 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<h1>List Product</h1>
+			<h1>List News</h1>
 		</div>
 
 		<div class="row">
@@ -82,9 +82,9 @@
 
 					<td><a th:href="@{/admin/news/edit/{id}(id=${news.id})}"
 						class="btn btn-primary">Update</a>
-						<button type="button" class="btn btn-danger"
-							data-target="#deleteModal" data-toggle="modal">Delete
-							Item</button> <a th:href="@{/news/detail/{id}(id=${news.id})}"
+						<a th:href="@{/admin/news/{id}(id=${news.id})}"
+						class="btn btn-danger">Delete</a>
+						<a th:href="@{/news/detail/{id}(id=${news.id})}"
 						class="btn btn-info">Detail</a></td>
 				</tr>
 			</tbody>

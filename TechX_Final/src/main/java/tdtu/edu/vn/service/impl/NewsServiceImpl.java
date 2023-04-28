@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -52,19 +53,30 @@ public class NewsServiceImpl implements NewsService{
 	public int count() {
 		return newsRepository.findAll().size();
 	}
-	@Override
-	public List<News> getAllNewss(){
-		
-		Sort sort=Sort.by(Direction.DESC,"createDate");
-		List<News> listNews= newsRepository.findAll(sort);
-		List<News> result= new ArrayList<News>();
-		int n=listNews.size();
-		for (int i=0; i<n;i++) {
-			if(i<3) {
-				result.add(listNews.get(i));
-			}
+	private Page toPage(List list, Pageable pageable) {
+		if (pageable.getOffset() >= list.size()) {
+			return Page.empty();
 		}
-		return result;
+		int startIndex = (int) pageable.getOffset();
+		int endIndex = (int) ((pageable.getOffset() + pageable.getPageSize()) > list.size() ? list.size()
+				: pageable.getOffset() + pageable.getPageSize());
+		List subList = list.subList(startIndex, endIndex);
+		return new PageImpl(subList, pageable, list.size());
+	}
+
+	@Override
+	public Page<News> getAllNewsShow(Pageable pageable){
+		
+		
+		List<News> listNews= newsRepository.findAll();
+		List<News> result= new ArrayList<News>();
+		for (News news : listNews) {
+			if(news.getHide()==true) {
+				result.add(news);
+			}
+			
+		}
+		return toPage(result, pageable);
 	}
 
 }

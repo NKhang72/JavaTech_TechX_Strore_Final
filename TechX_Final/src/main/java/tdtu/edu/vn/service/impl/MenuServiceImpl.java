@@ -3,6 +3,7 @@ package tdtu.edu.vn.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import tdtu.edu.vn.entity.Menu;
@@ -27,6 +28,10 @@ public class MenuServiceImpl implements MenuService{
 			}
 		}
 		return result;
+	}
+	@Override
+	public List<Menu> getMenu(Sort sort){
+		return menuRepository.findAll(sort);
 	}
 	
 	@Override
