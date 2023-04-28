@@ -21,6 +21,7 @@ import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.Menu;
 import tdtu.edu.vn.entity.News;
 import tdtu.edu.vn.entity.Product;
+import tdtu.edu.vn.entity.Slide;
 import tdtu.edu.vn.entity.User;
 import tdtu.edu.vn.repository.NewsRepository;
 import tdtu.edu.vn.repository.UserRepository;
@@ -28,6 +29,7 @@ import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.MenuService;
 import tdtu.edu.vn.service.NewsService;
 import tdtu.edu.vn.service.ProductService;
+import tdtu.edu.vn.service.SlideService;
 
 @Controller
 public class IndexController {
@@ -36,17 +38,19 @@ public class IndexController {
 	public MenuService menuService;
 	public UserRepository userRepository;
 	public NewsService newsService;
+	public SlideService slideService;
 	
 	//public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService,UserRepository userRepository) {}
 
 	
-	public IndexController(ProductService productService,NewsService newsService, CategoryService categoryService, MenuService menuService, UserRepository userRepository) {
+	public IndexController(ProductService productService,NewsService newsService, CategoryService categoryService, MenuService menuService, UserRepository userRepository, SlideService slideService) {
 		super();
 		this.productService = productService;
 		this.categoryService=categoryService;
 		this.menuService=menuService;
 		this.userRepository=userRepository;
 		this.newsService=newsService;
+		this.slideService=slideService;
 	}
 
 	@GetMapping({"/index", "/"})
@@ -68,6 +72,11 @@ public class IndexController {
 	public List<Category> categgory(){
 		return categoryService.getAllCategorys();
 	}
+	@ModelAttribute("slide")
+	public Slide getSldie() {
+		return slideService.getLastSlide();
+	}
+	
 	@ModelAttribute("menu")
 	public List<Menu> menu(){
 		return menuService.getAllMenus();

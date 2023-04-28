@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +28,16 @@ import org.springframework.ui.Model;
 import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.News;
 import tdtu.edu.vn.entity.Product;
+import tdtu.edu.vn.entity.Slide;
 import tdtu.edu.vn.entity.User;
 import tdtu.edu.vn.repository.ProductRepository;
+import tdtu.edu.vn.repository.SlideRepository;
 import tdtu.edu.vn.repository.UserRepository;
 import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.MenuService;
 import tdtu.edu.vn.service.NewsService;
 import tdtu.edu.vn.service.ProductService;
+import tdtu.edu.vn.service.SlideService;
 import tdtu.edu.vn.service.UserService;
 import tdtu.edu.vn.web.dto.UserRegistrationDto;
 
@@ -45,6 +49,7 @@ public class AdminController {
 	public NewsService newsService;
 	public UserService userService;
 	public UserRepository userRepository;
+	public SlideService slideService;
 	
 	@ModelAttribute("user")
 	public UserRegistrationDto userRegistrationDto() {
@@ -56,7 +61,7 @@ public class AdminController {
 
 //	
 	public AdminController(ProductService productService, CategoryService categoryService,
-			MenuService menuService ,NewsService newsService, UserService userService, UserRepository userRepository ) {
+			MenuService menuService ,NewsService newsService, UserService userService, UserRepository userRepository , SlideService slideService) {
 		super();
 		this.productService = productService;
 		this.categoryService=categoryService;
@@ -64,6 +69,7 @@ public class AdminController {
 		this.newsService=newsService;
 		this.userService=userService;
 		this.userRepository=userRepository;
+		this.slideService=slideService;
 //		
 	}
 
@@ -295,5 +301,100 @@ public class AdminController {
 	public String deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
 		return "redirect:/admin";
+	}
+	@GetMapping("admin/slide/page")
+	public String uploadSlide(Model model, @RequestParam("field") Optional<String> field,  @RequestParam("p") Optional<Integer> p) {
+		int c,pageCount;
+		int total=slideService.count();
+		if(total%7==0) {
+			pageCount=total/7;
+		}
+		else {
+			pageCount=(total/7)+1;
+		}
+		if(p==null || p.hashCode()<0 ) {
+			c=0;
+		}
+		else if(p.hashCode() >= pageCount) {
+			c=p.hashCode()-1;
+		}
+		else {
+			c=p.hashCode();
+		}
+		Sort sort= Sort.by(Direction.ASC, field.orElse("id"));
+		Pageable pageable= PageRequest.of(c, 7,sort);
+		model.addAttribute("slide", slideService.findAll(pageable));
+		return "list_slide";
+	}
+	@GetMapping("/admin/slide/edit/{id}")
+	public String editSlideForm(@PathVariable Long id, Model model) {
+		model.addAttribute("slide", slideService.getSlideById(id));
+		return "edit_slide";
+	}
+	@PostMapping("/admin/slide/{id}")
+	public String editSlideForm(@PathVariable Long id,@RequestParam("title") String title,@RequestParam("content") String content
+			, @RequestParam("image") MultipartFile photo) {
+		Slide slide= slideService.getSlideById(id);
+		
+		slide.setTitle(title);
+		slide.setContent(content);
+		Date date=new Date();
+		slide.setCreateDate(date);
+		if (photo.isEmpty()) {
+			return "/admin";
+		} else {
+			Path path = Paths.get("uploads/");
+			try {
+				InputStream inputStream = photo.getInputStream();
+				
+				Files.copy(inputStream, path.resolve(photo.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+				
+				slide.setImage(photo.getOriginalFilename().toLowerCase());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		slideService.updateSlide(slide);
+		return "redirect:/admin/slide/page";
+	}
+
+	@GetMapping("/admin/slide/{id}")
+	public String deleteSlide(@PathVariable Long id) {
+		slideService.deleteSlideById(id);
+		return "redirect:/admin/slide/page";
+	}
+	@GetMapping("/admin/slide/new")
+	public String createSlideForm(Model model) {
+		Slide slide= new Slide();
+		model.addAttribute("slide", slide);
+		return "create_slide";
+
+	}
+	@PostMapping("/admin/slide/new")
+	public String createSlide(@RequestParam("title") String title,@RequestParam("content") String content
+			, @RequestParam("image") MultipartFile photo) {
+		
+		Slide slide= new Slide();
+		
+		slide.setTitle(title);
+		slide.setContent(content);
+		Date date=new Date();
+		slide.setCreateDate(date);
+		if (photo.isEmpty()) {
+			return "/admin";
+		} else {
+			Path path = Paths.get("uploads/");
+			try {
+				InputStream inputStream = photo.getInputStream();
+				
+				Files.copy(inputStream, path.resolve(photo.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+				
+				slide.setImage(photo.getOriginalFilename().toLowerCase());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		slideService.saveSlide(slide);
+		return "redirect:/admin/slide/page";
 	}
 }

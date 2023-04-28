@@ -84,9 +84,9 @@ tinymce.init({
 		<div class="row">
 			<div
 				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class="text-center">Update News</h1>
+				<h1 class="text-center">Update Slide</h1>
 				<div class="card-body">
-					<form name="htmltest" th:action="@{/admin/news/{id} (id=${news.id})}" th:object="${news}"
+					<form name="htmltest" th:action="@{/admin/slide/{id} (id=${slide.id})}" th:object="${slide}"
 						enctype="multipart/form-data" method="POST">
 						<div class="form-group">
 							<label> Title</label> <input type="text" name="title"
@@ -97,15 +97,10 @@ tinymce.init({
 							<label> Content </label> <textarea id="content" type="text" name="content"
 								th:field="*{content}" class="form-control"
 								placeholder="Enter content" required> </textarea>
-					
+					</div>
+						
 						<div class="form-group">
-							
-								<input type="checkbox" id="hide" name="hide" value="*{hide}" th:checked="${news.hide} ">
-								<label >Hide</label>
-							
-						</div>
-						<div class="form-group">
-							<label> Image </label> <input required th:field="*{image}" th:value="'uploads/'+ ${news.image}" type="file"
+							<label> Image </label> <input required th:field="*{image}" th:value="'uploads/'+ ${slide.image}" type="file"
 								name="image" accept="image/png, image/jpeg" class="form-control" />
 						</div>
 						<div class="box-footer">

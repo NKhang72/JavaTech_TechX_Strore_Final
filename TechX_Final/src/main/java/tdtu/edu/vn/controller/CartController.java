@@ -38,7 +38,6 @@ public class CartController {
 	public CategoryService categoryService;
 	public MenuService menuService;
 	public UserService userService;
-	public UserRepository userRepository;
 	
 	public CartController( CategoryService categoryService,
 			MenuService menuService,  UserService userService, UserRepository userRepository ) {

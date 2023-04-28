@@ -84,28 +84,24 @@ tinymce.init({
 		<div class="row">
 			<div
 				class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class="text-center">Update News</h1>
+				<h1 class="text-center">Create Slide</h1>
 				<div class="card-body">
-					<form name="htmltest" th:action="@{/admin/news/{id} (id=${news.id})}" th:object="${news}"
+					<form th:action="@{/admin/slide/new}" th:object="${slide}"
 						enctype="multipart/form-data" method="POST">
 						<div class="form-group">
-							<label> Title</label> <input type="text" name="title"
+							<label> Title</label> <input required type="text" name="title"
 								th:field="*{title}" class="form-control"
-								placeholder="Enter title" required />
+								placeholder="Enter title" />
 						</div>
 						<div class="form-group">
-							<label> Content </label> <textarea id="content" type="text" name="content"
+							<label> Content </label> <textarea  id="content" type="text" name="content"
 								th:field="*{content}" class="form-control"
-								placeholder="Enter content" required> </textarea>
+								placeholder="Enter content" > </textarea>
 					
-						<div class="form-group">
-							
-								<input type="checkbox" id="hide" name="hide" value="*{hide}" th:checked="${news.hide} ">
-								<label >Hide</label>
-							
+						
 						</div>
 						<div class="form-group">
-							<label> Image </label> <input required th:field="*{image}" th:value="'uploads/'+ ${news.image}" type="file"
+							<label> Image </label> <input  th:field="*{image}" type="file"
 								name="image" accept="image/png, image/jpeg" class="form-control" />
 						</div>
 						<div class="box-footer">
@@ -117,6 +113,7 @@ tinymce.init({
 			</div>
 		</div>
 	</div>
+	
 
 </body>
 </html>
