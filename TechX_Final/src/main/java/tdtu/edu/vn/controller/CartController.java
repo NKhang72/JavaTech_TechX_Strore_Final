@@ -1,5 +1,6 @@
 package tdtu.edu.vn.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import tdtu.edu.vn.entity.Cart;
 import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.Menu;
+import tdtu.edu.vn.entity.Oder;
+import tdtu.edu.vn.entity.OrderDetail;
 import tdtu.edu.vn.entity.Product;
 import tdtu.edu.vn.repository.UserRepository;
 import tdtu.edu.vn.service.CategoryService;
 import tdtu.edu.vn.service.MenuService;
 import tdtu.edu.vn.service.NewsService;
+import tdtu.edu.vn.service.OrderService;
 import tdtu.edu.vn.service.ProductService;
 import tdtu.edu.vn.service.UserService;
 import tdtu.edu.vn.entity.User;
@@ -38,15 +42,17 @@ public class CartController {
 	public CategoryService categoryService;
 	public MenuService menuService;
 	public UserService userService;
+	public OrderService orderService;
 	
 	public CartController( CategoryService categoryService,
-			MenuService menuService,  UserService userService, UserRepository userRepository ) {
+			MenuService menuService,  UserService userService, UserRepository userRepository , OrderService orderService) {
 		super();
 		
 		this.categoryService=categoryService;
 		this.menuService=menuService;
 		this.userService=userService;
 		this.userRepository=userRepository;
+		this.orderService=orderService;
 //		
 	}
 	@Autowired
@@ -72,14 +78,15 @@ public class CartController {
 	
 	@GetMapping("add/{product_id}")
 	public String addCart(@PathVariable("product_id") Long product_id) {
+		
 		Product product = productServiceImpl.getProductById(product_id);
 		if (product != null) {
-			Cart item = new Cart();
-			item.setName(product.getName());
-			item.setPrice(product.getPrice());
-			item.setQty(1);
+			OrderDetail item = new OrderDetail();
+			item.setProduct(product);
+			item.setQuanity(1);
 			item.setTotal(product.getPrice());
 			cartServiceImpl.add(item);
+			
 			return "redirect:/cart";
 		}
 		return "redirect:/index";

@@ -19,9 +19,9 @@
 					</thead>
 					<tbody>
 						<tr th:each="cart: ${carts} ">
-							<td th:text="${cart.name}"></td>
-							<td th:text="${cart.price}"></td>
-							<td th:text="${cart.qty}"></td>
+							<td th:text="${cart.product.getName()}"></td>
+							<td th:text="${cart.product.getPrice()}"></td>
+							<td th:text="${cart.quanity}"></td>
 							<td th:text="${cart.total}"></td>
 							<td><a th:href="@{/cart/remove/{id}(id=${cart.id})}"
 								class="btn btn-danger">Remove</a></td>
@@ -35,6 +35,7 @@
 
 				<hr />
 				<a class="btn btn-primary btn-sm" href="">Clear Cart</a>
+				<a class="btn btn-primary btn-sm" th:href="@{/cart/payment}">Payment</a>
 			</div>
 		</div>
 		<footer th:replace="layout :: footer"></footer>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import tdtu.edu.vn.entity.Cart;
+import tdtu.edu.vn.entity.OrderDetail;
 import tdtu.edu.vn.repository.CartRepository;
 import tdtu.edu.vn.service.CartService;
 
@@ -18,13 +19,13 @@ public class CartServiceImpl implements CartService {
 	private CartRepository cartRepository;
 
 	@Override
-	public Cart add(Cart item) {
+	public OrderDetail add(OrderDetail item) {
 		return cartRepository.save(item);
 	}
 
 	@Override
 	public boolean remove(Long id) {
-		Optional<Cart> removeCart = cartRepository.findById(id);
+		Optional<OrderDetail> removeCart = cartRepository.findById(id);
 		if (removeCart.isPresent()) {
 			cartRepository.deleteById(id);
 			return true;
@@ -33,18 +34,23 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart update(Long id, Cart cart) {
-		Cart updateCart = cartRepository.findById(id).orElse(null);
+	public OrderDetail update(Long id, OrderDetail OrderDetail) {
+		OrderDetail updateCart = cartRepository.findById(id).orElse(null);
 		if (updateCart != null) {
-			updateCart.setQty(cart.getQty());
+			updateCart.setQuanity(OrderDetail.getQuanity());
 			return cartRepository.save(updateCart);
 		}
 		return null;
 	}
+	@Override
+	public OrderDetail updateid(OrderDetail OrderDetail) {
+		return cartRepository.save(OrderDetail);
+		
+	}
 
 	@Override
 	public boolean clear() {
-		List<Cart> carts = cartRepository.findAll();
+		List<OrderDetail> carts = cartRepository.findAll();
 
 		if (carts.size() > 0) {
 			cartRepository.deleteAll();
@@ -54,15 +60,15 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<Cart> getAllItem() {
+	public List<OrderDetail> getAllItem() {
 		// TODO Auto-generated method stub
 		return cartRepository.findAll();
 	}
 
 	public double totalPrice() {
-		List<Cart> carts = cartRepository.findAll();
+		List<OrderDetail> carts = cartRepository.findAll();
 		double prices = 0.0;
-		for (Cart cart : carts) {
+		for (OrderDetail cart : carts) {
 			prices += cart.getTotal();
 		}
 		return prices;

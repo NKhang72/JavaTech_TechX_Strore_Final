@@ -14,6 +14,7 @@ public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private double total;
 	int price;
 	Integer quanity;
 	@ManyToOne
@@ -22,6 +23,13 @@ public class OrderDetail {
 	@ManyToOne
 	@JoinColumn(name="Productid")
 	Product product;
+	
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
+	}
 	public OrderDetail() {
 		super();
 	}

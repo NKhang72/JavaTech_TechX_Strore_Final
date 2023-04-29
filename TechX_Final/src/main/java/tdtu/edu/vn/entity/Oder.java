@@ -25,6 +25,8 @@ public class Oder {
 	String address;
 	@Column(name = "phone")
 	String phone;
+	@Column(name = "payment")
+	String payment;
 	@Column(name="create_day")
 	Date createDate= new Date();
 	@OneToMany(mappedBy = "oder")
@@ -67,6 +69,12 @@ public class Oder {
 	}
 	public void setOderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+	public String getPayment() {
+		return payment;
+	}
+	public void setPayment(String payment) {
+		this.payment = payment;
 	}
 	
 	
