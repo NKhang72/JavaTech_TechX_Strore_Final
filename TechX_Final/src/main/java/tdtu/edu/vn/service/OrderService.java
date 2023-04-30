@@ -2,6 +2,9 @@ package tdtu.edu.vn.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import tdtu.edu.vn.entity.Cart;
 import tdtu.edu.vn.entity.Oder;
 import tdtu.edu.vn.entity.OrderDetail;
@@ -15,7 +18,7 @@ public interface OrderService {
 
 	public boolean clear();
 
-	public List<Oder> getAllOrder();
+	public Page<Oder> getAllOrder(Pageable pageable);
 	
 	public Oder getNewOrder();
 

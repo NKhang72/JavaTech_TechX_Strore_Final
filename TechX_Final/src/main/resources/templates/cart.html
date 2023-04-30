@@ -9,14 +9,18 @@
 			<div class="col-sm-9">
 				<table class="table table-bordered">
 					<thead>
+						<col width=auto span="1">
+						<col width="50" span="2">
+    					<col width="250" span="1">
 						<tr>
 							<th>Name</th>
 							<th>Price</th>
 							<th>Quantity</th>
-							<th>Amount</th>
+							<th scope="row">Amount</th>
 							<th></th>
 						</tr>
 					</thead>
+					
 					<tbody>
 						<tr th:each="cart: ${carts} ">
 							<td th:text="${cart.product.getName()}"></td>
@@ -30,7 +34,7 @@
 
 				</table>
 				<p>
-					Tong tien: <span th:text="${total_price}"></span>
+					Total: <span th:text="${total_price}"></span>
 				</p>
 
 				<hr />

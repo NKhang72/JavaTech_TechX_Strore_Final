@@ -25,6 +25,8 @@ public class Oder {
 	String address;
 	@Column(name = "phone")
 	String phone;
+	@Column(name = "status")
+	String status;
 	@Column(name = "payment")
 	String payment;
 	@Column(name="create_day")
@@ -84,6 +86,12 @@ public class Oder {
 	}
 	public void setTotal(int total) {
 		this.total = total;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	

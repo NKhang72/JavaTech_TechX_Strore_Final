@@ -80,16 +80,25 @@ public class CartController {
 	public String addCart(@PathVariable("product_id") Long product_id) {
 		
 		Product product = productServiceImpl.getProductById(product_id);
-		if (product != null) {
+		if ( cartServiceImpl.findOrderDetailbyProduct(product.getId())==null) {
 			OrderDetail item = new OrderDetail();
 			item.setProduct(product);
 			item.setQuanity(1);
-			item.setTotal(product.getPrice());
+			item.setPrice(product.getPrice());
+			item.setTotal(product.getPrice()*item.getQuanity());
+			item.setOder(null);
 			cartServiceImpl.add(item);
 			
 			return "redirect:/cart";
 		}
-		return "redirect:/index";
+		else {
+			OrderDetail item=cartServiceImpl.findOrderDetailbyProduct(product.getId());
+			item.setQuanity(item.getQuanity()+1);
+			item.setTotal(product.getPrice()*item.getQuanity());
+			cartServiceImpl.updateid(item);
+			return "redirect:/cart";
+		}
+		
 	}
 //
 	@GetMapping("/detail/{id}")

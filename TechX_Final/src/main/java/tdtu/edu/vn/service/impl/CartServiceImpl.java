@@ -1,5 +1,6 @@
 package tdtu.edu.vn.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import tdtu.edu.vn.entity.Cart;
 import tdtu.edu.vn.entity.OrderDetail;
+import tdtu.edu.vn.entity.Product;
 import tdtu.edu.vn.repository.CartRepository;
 import tdtu.edu.vn.service.CartService;
 
@@ -19,8 +21,8 @@ public class CartServiceImpl implements CartService {
 	private CartRepository cartRepository;
 
 	@Override
-	public OrderDetail add(OrderDetail item) {
-		return cartRepository.save(item);
+	public void add(OrderDetail item) {
+			cartRepository.save(item);
 	}
 
 	@Override
@@ -63,6 +65,27 @@ public class CartServiceImpl implements CartService {
 	public List<OrderDetail> getAllItem() {
 		// TODO Auto-generated method stub
 		return cartRepository.findAll();
+	}
+	@Override
+	public List<OrderDetail> getAllNewCart() {
+		// TODO Auto-generated method stub
+		List<OrderDetail> list= cartRepository.findAll();
+		List<OrderDetail> listOrderNew=new ArrayList<OrderDetail>();
+		for (OrderDetail orderDetail : list) {
+			if(orderDetail.getOder()==null)
+				listOrderNew.add(orderDetail);
+		}
+		return listOrderNew;
+	}
+	@Override
+	public OrderDetail findOrderDetailbyProduct(Integer id) {
+		List<OrderDetail> list=cartRepository.findAll();
+		for (OrderDetail orderDetail : list) {
+			if(orderDetail.getProduct().getId()==id) {
+				return orderDetail;
+			}
+		}
+		return null;
 	}
 
 	public double totalPrice() {

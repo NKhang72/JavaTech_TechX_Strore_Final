@@ -8,7 +8,13 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +51,6 @@ public class OrderController {
 	public SlideService slideService;
 	public OrderService orderService;
 	public CartService cartService;
-	private Object listOrder;
 	
 	//public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService,UserRepository userRepository) {}
 
@@ -65,6 +70,13 @@ public class OrderController {
 	public String paymment(Model model) {
 		Oder oder= new Oder();
 		List<OrderDetail> listOrder=cartService.getAllItem();
+		List<OrderDetail> listOrderNew=new ArrayList<OrderDetail>();
+		for (OrderDetail orderDetail : listOrder) {
+			if(orderDetail.getOder()==null) {
+				listOrderNew.add(orderDetail);
+			}
+			
+		}
 		oder.setOderDetails(listOrder);
 		int total=orderService.totalOrder(listOrder);
 		oder.setTotal(total);
@@ -72,7 +84,7 @@ public class OrderController {
 		//update orderid
 		Oder exitOrder= orderService.getNewOrder();
 		Long id= exitOrder.getId();
-		for (OrderDetail orderDetail : listOrder) {
+		for (OrderDetail orderDetail : listOrderNew) {
 			orderDetail.setOder(oder);
 			cartService.updateid(orderDetail);
 		}
@@ -87,21 +99,60 @@ public class OrderController {
 	///update, khi bam ok thi update name, dia chi, phone len oder vua tao.
 	//hien thij oder nay ben trang admin
 	@PostMapping("/cart/payment/order/{id}")
-	public String editNewsOder(@PathVariable Long id,@RequestParam("name") String name,@RequestParam("phone") String phone
+	public String editOder(@PathVariable Long id,@RequestParam("name") String name,@RequestParam("phone") String phone
 			,@RequestParam("address") String address, @RequestParam("payment") String httt) {
 		Oder oder= orderService.OderById(id);
 		oder.setName(name);
 		oder.setPhone(phone);
 		oder.setAddress(address);
 		oder.setPayment(httt);
+		oder.setStatus("Waiting");
 		orderService.update(oder);
 		return "redirect:/index";
 	}
-	@GetMapping("/order")
-	public String showOrder(Model model) {
-	    List<Oder> orders = orderService.getAllOrder();
-	    model.addAttribute("order", orders);
-	    return "order";
+	@GetMapping("/admin/order/page")
+	public String showOrder(Model model, @RequestParam("p") Optional<Integer> p,@RequestParam("field") Optional<String> field) {
+		int c,pageCount;
+		int total=newsService.count();
+		if(total%7!=0) {
+			pageCount=total/7;
+		}
+		else {
+			pageCount=(total/7)+1;
+		}
+		if(p==null || p.hashCode()<0 ) {
+			c=0;
+		}
+		else if(p.hashCode() >= pageCount) {
+			c=p.hashCode()-1;
+		}
+		else {
+			c=p.hashCode();
+		}
+		Sort sort= Sort.by(Direction.DESC, field.orElse("createDate"));
+		Pageable pageable= PageRequest.of(c, 7,sort);
+		
+		Page<Oder> page= orderService.getAllOrder(pageable);
+		model.addAttribute("orders",page);
+	    return "list_order";
+	}
+	@GetMapping("/admin/order/{id}")
+	public String deleteOrder(@PathVariable Long id) {
+		orderService.remove(id);
+		return "redirect:/admin/order/page";
+	}
+	@GetMapping("/admin/order/detail/{id}")
+	public String DetailOrder(@PathVariable Long id, Model model) {
+		model.addAttribute("order",orderService.OderById(id));
+		model.addAttribute("products", orderService.OderById(id).getOderDetails());
+		return "detail_Order";
+	}
+	@GetMapping("/admin/order/confirm/{id}")
+	public String Confirm(@PathVariable Long id) {
+		Oder oder= orderService.OderById(id);
+		oder.setStatus("Confirm");
+		orderService.update(oder);
+		return "redirect:/admin/order/page";
 	}
 	
 	

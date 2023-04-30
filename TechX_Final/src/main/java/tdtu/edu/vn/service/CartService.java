@@ -6,7 +6,7 @@ import tdtu.edu.vn.entity.Cart;
 import tdtu.edu.vn.entity.OrderDetail;
 
 public interface CartService {
-	public OrderDetail add(OrderDetail item);
+	public void add(OrderDetail item);
 
 	public boolean remove(Long id);
 
@@ -16,4 +16,6 @@ public interface CartService {
 
 	public List<OrderDetail> getAllItem();
 	public OrderDetail updateid(OrderDetail OrderDetail) ;
+	public OrderDetail findOrderDetailbyProduct(Integer id);
+	public List<OrderDetail> getAllNewCart() ;
 }
