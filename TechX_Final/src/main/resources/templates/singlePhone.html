@@ -63,7 +63,7 @@
 						</div>
 						<div
 							class="free_delivery d-flex flex-row align-items-center justify-content-center">
-							<span class="ti-truck"></span><span>free delivery</span>
+							<span class="ti-truck"></span><a th:href="@{/cart/add/{product_id}(product_id=${product.id})}">ADD TO CART</a>
 						</div>
 						<!-- 					<div class="original_price">$629.99</div> -->
 						<div class="product_price" th:text=${product.price}>$495.00</div>
