@@ -28,6 +28,7 @@ public class Oder {
 	@Column(name = "payment")
 	String payment;
 	@Column(name="create_day")
+
 	Date createDate= new Date();
 	@OneToMany(mappedBy = "oder")
 	List<OrderDetail> orderDetails;
@@ -76,6 +77,7 @@ public class Oder {
 	public void setPayment(String payment) {
 		this.payment = payment;
 	}
+
 	
 	
 	

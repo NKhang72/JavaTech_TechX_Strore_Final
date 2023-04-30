@@ -126,4 +126,9 @@ public class CartController {
 	public List<Menu> menu(){
 		return menuService.getAllMenus();
 	}
+	@GetMapping("/cart/clear")
+	public String removeAllI() {
+	    cartServiceImpl.clear();
+	    return "redirect:/cart";
+	}
 }

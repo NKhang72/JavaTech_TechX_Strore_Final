@@ -63,13 +63,4 @@ public class OrderServiceImpl implements OrderService {
 		int n=orderRepository.findAll().size();
 		return orderRepository.findAll().get(n-1);
 	}
-
-//	public double totalPrice() {
-//		List<Oder> carts = orderRepository.findAll();
-//		double prices = 0.0;
-//		for (Oder cart : carts) {
-//			prices += cart.getTotal();
-//		}
-//		return prices;
-//	}
 }

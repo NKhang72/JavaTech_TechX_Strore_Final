@@ -18,4 +18,7 @@ public interface OrderService {
 	public List<Oder> getAllOrder();
 	
 	public Oder getNewOrder();
+
+	public Oder OderById(Long id);
+	
 }

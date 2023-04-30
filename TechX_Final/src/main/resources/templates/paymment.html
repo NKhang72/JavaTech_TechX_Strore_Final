@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Nền tảng - Kiến thức cơ bản về WEB | Bảng tin</title>
+<title>Trang Thanh Toán</title>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/styles/bootstrap.css" type="text/css">
@@ -51,25 +51,23 @@
 							<h4
 								class="d-flex justify-content-between align-items-center mb-3">
 								<span class="text-muted">Giỏ hàng</span> <span
-									class="badge badge-secondary badge-pill">2</span>
+									class="badge badge-secondary badge-pill"></span>
 							</h4>
 							<ul class="list-group mb-3">
-								<!--            th:text="${cartitem.price} +'*'+ ${cartitem.quanity}"                 <input type="hidden" name="sanphamgiohang[1][sp_ma]" value="2"> -->
-								<!--                             <input type="hidden" name="sanphamgiohang[1][gia]" value="11800000.00"> -->
-								<!--        h:text="${total}"                     <input type="hidden" name="sanphamgiohang[1][soluong]" value="2"> -->
-
 								<li 
-									class="list-group-item d-flex justify-content-between lh-condensed">
+									class="list-group-item d-flex justify-content-between lh-condensed" th:each="listOrder: ${listOrder}">
 									<div>
-										<h6  class="my-0">ten</h6>
+										<h6  class="my-0" th:text="${listOrder.product.getName()}">
+								
+										</h6>
 										<small 
-											class="text-muted">gia * sl</small>
+											class="text-muted"th:text="${listOrder.product.getPrice()}">gia * sl</small>
 									</div>
 
 								</li>
 
 								<li class="list-group-item d-flex justify-content-between">
-									<span>Tổng thành tiền</span> <strong t></strong>
+									<span >Tổng thành tiền</span> <strong th:text="${total_price}"></strong>
 								</li>
 							</ul>
 
@@ -94,11 +92,11 @@
 								</div>
 
 								<div class="col-md-12">
-									<label for="kh_ten">Điện thoại</label> <input type="text"
+									<label for="kh_dt">Điện thoại</label> <input type="text"
 										class="form-control" name="phone">
 								</div>
 								<div class="col-md-12">
-									<label for="kh_ten">Địa chỉ</label> <input type="text"
+									<label for="kh_diachi">Địa chỉ</label> <input type="text"
 										class="form-control" name="address">
 								</div>
 
