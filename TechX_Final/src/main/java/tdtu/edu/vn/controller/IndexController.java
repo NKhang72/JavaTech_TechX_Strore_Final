@@ -63,6 +63,14 @@ public class IndexController {
 		 }
 		return "index";
 	}
+	@GetMapping("/contact")
+	public String contact() {
+		return "contact";
+	}
+	@GetMapping("/about")
+	public String about() {
+		return "about";
+	}
 	//@ModelAttribute("news")
 //	public List<News> allNews(){
 		
