@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Tech X Store Management System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" th:href="@{/admin/page}">Tech X Store
+			Management System</a>
+
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/page}">Product</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/admin}">Order
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/news/page}">News </a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/menu}">Menu </a></li>
+					<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/slide/page}">Slide </a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/admin/users}">Users </a></li>
+				<li class="nav-item">
+					<form th:action="@{/logout}" method="post">
+						<input type="submit" value="Sign Out" />
+					</form>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<h1>Order</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-3">
+				<!-- <a th:href="@{/admin/news/new}" class="btn btn-primary btn-sm mb-3">
+					Add News</a> -->>
+			</div>
+		</div>
+
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th><a class="text-light" th:href="#">Tên Khách Hàng</a></th>
+					<th><a class="text-light" th:href="#">Số điện thoại</a></th>
+					<th><a class="text-light" th:href="#">Địa chỉ</a></th>
+					<th><a class="text-light" th:href="#">Phương thức thanh toán</a></th>
+					<th><a class="text-light" th:href="#">Tổng tiền</a></th>
+					<th class="text-light">Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="oder: ${Order} ">
+					<td th:text="${oder.name}"></td>
+					<td th:text="${oder.phone}"></td>
+					<td th:text="${oder.address}"></td>
+					<td th:text="${oder.payment}"></td>
+					<td th:text="${oder.total}"></td>
+
+			</tbody>
+
+		</table>
+		<!-- <nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/news/page?p='+${listNews.number-1}}">Previous</a></li>
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/news/page?p='+${listNews.number+1}}">Next</a></li>
+				<li class="page-item"><a class="page-link"
+					href="/admin/news/page?p=0">First</a></li>
+				<li class="page-item"><a class="page-link"
+					th:href="@{'/admin/news/page?p='+${listNews.totalPages-1}}">Last</a></li>
+			</ul>
+		</nav> -->
+		
+
+	</div>
+
+	<!-- Modal -->
+	<!-- <div class="modal fade" id="deleteModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure you want to delete?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="close-modal">No</button>
+					<button type="button" class="btn btn-danger">Yes</button>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	
+	
+</body>
+</html>

@@ -27,6 +27,7 @@ import org.springframework.ui.Model;
 
 import tdtu.edu.vn.entity.Category;
 import tdtu.edu.vn.entity.News;
+import tdtu.edu.vn.entity.Oder;
 import tdtu.edu.vn.entity.Product;
 import tdtu.edu.vn.entity.Slide;
 import tdtu.edu.vn.entity.User;
@@ -397,4 +398,6 @@ public class AdminController {
 		slideService.saveSlide(slide);
 		return "redirect:/admin/slide/page";
 	}
+	
+	
 }

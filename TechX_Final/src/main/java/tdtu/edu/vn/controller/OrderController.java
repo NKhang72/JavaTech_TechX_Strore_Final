@@ -12,11 +12,15 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.criteria.Order;
+import tdtu.edu.vn.entity.Category;
+import tdtu.edu.vn.entity.Menu;
 import tdtu.edu.vn.entity.News;
 import tdtu.edu.vn.entity.Oder;
 import tdtu.edu.vn.entity.OrderDetail;
@@ -41,6 +45,7 @@ public class OrderController {
 	public SlideService slideService;
 	public OrderService orderService;
 	public CartService cartService;
+	private Object listOrder;
 	
 	//public IndexController(ProductService productService, CategoryService categoryService, MenuService menuService,UserRepository userRepository) {}
 
@@ -72,7 +77,7 @@ public class OrderController {
 			cartService.updateid(orderDetail);
 		}
 		
-		 model.addAttribute("total", total);
+		model.addAttribute("total", total);
 		model.addAttribute("listOrder", listOrder);
 	    model.addAttribute("getId", id);
 	    model.addAttribute("order", oder);
@@ -92,6 +97,12 @@ public class OrderController {
 		orderService.update(oder);
 		return "redirect:/index";
 	}
-
+	@GetMapping("/order")
+	public String showOrder(Model model) {
+	    List<Oder> orders = orderService.getAllOrder();
+	    model.addAttribute("order", orders);
+	    return "order";
+	}
+	
 	
 }
