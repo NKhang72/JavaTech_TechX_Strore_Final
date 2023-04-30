@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2023 at 12:55 PM
+-- Generation Time: Apr 30, 2023 at 05:46 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -148,14 +148,6 @@ CREATE TABLE `oder` (
   `status` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `oder`
---
-
-INSERT INTO `oder` (`id`, `address`, `create_day`, `name`, `phone`, `payment`, `total`, `status`) VALUES
-(36, '18, Tôn Đức Thắng', '2023-04-30 16:48:38', 'Trần nguyên khang', '0898984897', 'banking', 24180000, 'Confirm'),
-(38, '18, Tôn Đức Thắng', '2023-04-30 17:34:04', 'Trần nguyên khang', '0898984897', 'cod', 57960000, 'Confirm');
-
 -- --------------------------------------------------------
 
 --
@@ -170,14 +162,6 @@ CREATE TABLE `oderdetails` (
   `productid` bigint(20) DEFAULT NULL,
   `total` double NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `oderdetails`
---
-
-INSERT INTO `oderdetails` (`id`, `price`, `quanity`, `oderid`, `productid`, `total`) VALUES
-(45, 27990000, 1, 38, 11, 27990000),
-(44, 9990000, 3, 38, 3, 29970000);
 
 -- --------------------------------------------------------
 
@@ -419,7 +403,7 @@ ALTER TABLE `oder`
 -- AUTO_INCREMENT for table `oderdetails`
 --
 ALTER TABLE `oderdetails`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `product`
