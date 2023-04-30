@@ -35,7 +35,7 @@
 		<main role="main">
 			<!-- Block content - Đục lỗ trên giao diện bố cục chung, đặt tên là `content` -->
 			<div class="container mt-4">
-				<form class="needs-validation" name="frmthanhtoan" action="#"
+				<form class="needs-validation" th:action="@{/cart/payment/order/{id} (id=${order.id})}" th:object="${order}" name="frmthanhtoan" 
 					method="POST">
 					<input type="hidden" name="kh_tendangnhap" value="dnpcuong">
 
@@ -61,13 +61,13 @@
 								
 										</h6>
 										<small 
-											class="text-muted"th:text="${listOrder.product.getPrice()}">gia * sl</small>
+											class="text-muted"th:text="${listOrder.product.getPrice()}+'*'+${listOrder.quanity}">gia * sl</small>
 									</div>
 
 								</li>
 
 								<li class="list-group-item d-flex justify-content-between">
-									<span >Tổng thành tiền</span> <strong th:text="${total_price}"></strong>
+									<span >Tổng thành tiền</span> <strong th:text="${total}"></strong>
 								</li>
 							</ul>
 
@@ -106,20 +106,19 @@
 
 							<div class="d-block my-3">
 								<div class="custom-control custom-radio">
-									<input id="httt-1" name="httt_ma" type="radio"
-										class="custom-control-input" required="" value="1"> <label
-										class="custom-control-label" for="httt-1">Tiền mặt</label>
+									<input type="radio" id="cod" name="cod"
+									class="custom-control-input" value="cod" th:field="*{payment}">
+									<label class="custom-control-label" for="cod">COD</label>
 								</div>
 								<div class="custom-control custom-radio">
-									<input id="httt-2" name="httt_ma" type="radio"
-										class="custom-control-input" required="" value="2"> <label
-										class="custom-control-label" for="httt-2">Chuyển khoản</label>
+									<input type="radio" id="banking" name="banking"
+									class="custom-control-input" value="banking" th:field="*{payment}">
+									<label class="custom-control-label" for="banking">Banking</label>
 								</div>
 								<div class="custom-control custom-radio">
-									<input id="httt-3" name="httt_ma" type="radio"
-										class="custom-control-input" required="" value="3"> <label
-										class="custom-control-label" for="httt-3">Ship COD</label>
-								</div>
+									<input type="radio" id="cash" name="cash"
+									class="custom-control-input" value="cash" th:field="*{payment}">
+									<label class="custom-control-label" for="cash">Cash</label>
 							</div>
 							<hr class="mb-4">
 							<button class="btn btn-primary btn-lg btn-block" type="submit"

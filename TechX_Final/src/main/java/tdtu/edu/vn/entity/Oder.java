@@ -30,6 +30,8 @@ public class Oder {
 	@Column(name="create_day")
 
 	Date createDate= new Date();
+	@Column(name = "total")
+	int total;
 	@OneToMany(mappedBy = "oder")
 	List<OrderDetail> orderDetails;
 	public Oder() {
@@ -76,6 +78,12 @@ public class Oder {
 	}
 	public void setPayment(String payment) {
 		this.payment = payment;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
 	}
 
 	

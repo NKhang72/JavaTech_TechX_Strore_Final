@@ -61,6 +61,8 @@ public class OrderController {
 		Oder oder= new Oder();
 		List<OrderDetail> listOrder=cartService.getAllItem();
 		oder.setOderDetails(listOrder);
+		int total=orderService.totalOrder(listOrder);
+		oder.setTotal(total);
 		orderService.add(oder);
 		//update orderid
 		Oder exitOrder= orderService.getNewOrder();
@@ -69,23 +71,26 @@ public class OrderController {
 			orderDetail.setOder(oder);
 			cartService.updateid(orderDetail);
 		}
+		
+		 model.addAttribute("total", total);
 		model.addAttribute("listOrder", listOrder);
 	    model.addAttribute("getId", id);
+	    model.addAttribute("order", oder);
 		
 		return "paymment";
 	}
 	///update, khi bam ok thi update name, dia chi, phone len oder vua tao.
 	//hien thij oder nay ben trang admin
-	@PostMapping("/admin/order")
+	@PostMapping("/cart/payment/order/{id}")
 	public String editNewsOder(@PathVariable Long id,@RequestParam("name") String name,@RequestParam("phone") String phone
-			,@RequestParam("address") String address, @RequestParam("httt") String httt) {
+			,@RequestParam("address") String address, @RequestParam("payment") String httt) {
 		Oder oder= orderService.OderById(id);
 		oder.setName(name);
 		oder.setPhone(phone);
 		oder.setAddress(address);
 		oder.setPayment(httt);
 		orderService.update(oder);
-		return "redirect:/admin/oder";
+		return "redirect:/index";
 	}
 
 	

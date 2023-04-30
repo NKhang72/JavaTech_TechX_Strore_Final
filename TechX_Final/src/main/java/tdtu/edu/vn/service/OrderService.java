@@ -20,5 +20,6 @@ public interface OrderService {
 	public Oder getNewOrder();
 
 	public Oder OderById(Long id);
+	public int totalOrder(List<OrderDetail> listProduct) ;
 	
 }

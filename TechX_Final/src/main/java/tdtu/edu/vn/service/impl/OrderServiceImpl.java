@@ -63,4 +63,18 @@ public class OrderServiceImpl implements OrderService {
 		int n=orderRepository.findAll().size();
 		return orderRepository.findAll().get(n-1);
 	}
+	@Override
+	public Oder OderById(Long id) {
+		return orderRepository.findById(id).get();
+	}
+	@Override
+	public int totalOrder(List<OrderDetail> listProduct) {
+		int total=0;
+		for (OrderDetail orderDetail : listProduct) {
+			int dongia;
+			dongia=orderDetail.getProduct().getPrice()*orderDetail.getQuanity();
+			total+=dongia;
+		}
+		return total;
+	}
 }
